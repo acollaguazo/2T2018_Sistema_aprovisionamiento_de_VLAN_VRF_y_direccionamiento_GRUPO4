@@ -184,7 +184,10 @@ public class SSHform extends javax.swing.JFrame {
 
                     ///////////////// aqui permite ejecutar un comando
                     //String result = sshConnector.executeCommand("config t\n int f1/0." + jTextField2.getText() + "\n encapsulation dot1q " + jTextField2.getText() + " \n ip address 192.168." + jTextField2.getText() + ".1 255.255.255.0\n description VLAN-DE-EMPRESA-" + jTextField1.getText() + " \n");
-                    String result = sshConnector.executeCommand("config t\n int f1/0." + vlanText.getText() + "\n encapsulation dot1q " + vlanText.getText() + " \n ip address 192.168.30.1 255.255.255.0\n description VLAN-DE-EMPRESA-" + empresaText.getText() + " \n");
+                    String result = sshConnector.executeCommand("config t\n int f0/0." + vlanText.getText() + "\n encapsulation dot1q " + vlanText.getText() + " \n description VLAN-DE-EMPRESA-" + empresaText.getText() + " \n"+"do wr  \n\n    ");
+                    if (result.equals(null)||result.equals("")){
+                        JOptionPane.showMessageDialog(null, "VLAN"+vlanText.getText().toString()+"creada exitosamente en la ciudad "+ciudadText.getText().toString()+" para\n la empresa "+empresaText.getText().toString());
+                    }
                     sshConnector.disconnect();
 
                     System.out.println(result);
