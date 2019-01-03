@@ -125,52 +125,11 @@ public class Prueba extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         if (!jComboBox1.getSelectedItem().toString().equals("Seleccione")) {
             if (jTextField1.getText().equals("") || jTextField2.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
             } else {
-//////            
-//////            if (jTextField1.getText().equals("Admin") && jTextField2.getText().equals("Admin")){
-//////                SSHform Form_SSH = new SSHform();
-//////            //Obtener la hora y fecha actual
-//////                //Fecha
-//////                Date sistFecha = new Date();
-//////                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MMM-YYYY");
-//////                //Hora
-//////                Date sistHora = new Date();
-//////                SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss a");
-//////                Calendar hoy = Calendar.getInstance();
-//////                
-//////                //Guarda el registro de ingreso del usuario
-//////                try{
-//////                    File archivo;
-//////                    FileWriter escribir;
-//////                    PrintWriter linea;
-//////                    
-//////                    archivo = new File("Registro.txt");
-//////                    if(!archivo.exists()){
-//////                        archivo.createNewFile();
-//////                    }
-//////                    escribir = new FileWriter(archivo, true);
-//////                    linea = new PrintWriter(escribir);
-//////                    //escribir fecha y hora
-//////                    linea.println(formatoFecha.format(sistFecha)+"  "+String.format(formatoHora.format(sistHora), hoy));
-//////                    //escribir usuario que ingreso al sistema
-//////                    linea.println("Ingreso del usuario:  "+jTextField1.getText());
-//////                    
-//////                    linea.close();
-//////                    escribir.close();
-//////                    
-//////                    
-//////                    
-//////                }catch(Exception e){
-//////                    JOptionPane.showMessageDialog(null, "Error al guaradar el registro");
-//////                }
-//////                
-//////                Form_SSH.setVisible(true);
-//////                this.dispose();
-//////            }
                 try {
                     con = new Conectar();
                     Connection reg = con.getConnection();
@@ -185,26 +144,31 @@ public class Prueba extends javax.swing.JFrame {
 
                         try {
                             sshConnector = new SSHConnector();
-
                             sshConnector.connect(x, IP_ROUTER, 22);
-                            String result = sshConnector.executeCommand("show run\n");
-                            sshform.getJTextArea().setText(result);
+                            sshform.setUser(x);
+                            sshform.setIpRouter(IP_ROUTER);
+                            sshform.setSSHConnector(sshConnector);
+                            sshform.getRouterText().setEditable(false);
+
+                            
+                            //String result = sshConnector.executeCommand("show run\n       ");
+                            //sshform.getJTextArea().setText(result);
                             sshConnector.disconnect();
 
-                            System.out.println(result);
-                        } catch (JSchException ex) {
+                            //System.out.println(result);
+                        } catch (Exception ex) {
                             ex.printStackTrace();
-
                             System.out.println(ex.getMessage());
-                        } catch (IllegalAccessException ex) {
-                            ex.printStackTrace();
-
-                            System.out.println(ex.getMessage());
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-
-                            System.out.println(ex.getMessage());
-                        }
+                        } 
+//                        catch (IllegalAccessException ex) {
+//                            ex.printStackTrace();
+//
+//                            System.out.println(ex.getMessage());
+//                        } catch (IOException ex) {
+//                            ex.printStackTrace();
+//
+//                            System.out.println(ex.getMessage());
+//                        }
                         //Obtener la hora y fecha actual
                         //Fecha
                         Date sistFecha = new Date();
@@ -248,7 +212,7 @@ public class Prueba extends javax.swing.JFrame {
                     Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Seleccione el router");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -260,16 +224,16 @@ public class Prueba extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (jComboBox1.getSelectedItem().toString().equals("P")) {
             IP_ROUTER = "172.16.0.9";
-            nameRouter="P";
+            nameRouter = "P";
         } else if (jComboBox1.getSelectedItem().toString().equals("PE-UIO")) {
             IP_ROUTER = "172.16.0.2";
-            nameRouter="PE-UIO";
+            nameRouter = "PE-UIO";
         } else if (jComboBox1.getSelectedItem().toString().equals("PE-CUE")) {
             IP_ROUTER = "172.16.0.6";
-            nameRouter="PE-CUE";
+            nameRouter = "PE-CUE";
         } else {
             IP_ROUTER = "";
-            nameRouter="";
+            nameRouter = "";
         }
 
 
