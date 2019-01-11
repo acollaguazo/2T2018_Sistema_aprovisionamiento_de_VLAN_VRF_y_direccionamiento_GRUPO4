@@ -5,7 +5,6 @@
  */
 package interfaces;
 
-import clases.Registro;
 import clases.SSHConnector;
 import clases.User;
 import com.jcraft.jsch.JSchException;
@@ -20,7 +19,6 @@ import javax.swing.JTextField;
  */
 public class SSHform extends javax.swing.JFrame {
     SSHConnector sshConnector;
-    Registro RegistrarEvento;
     User x;
     String IP_ROUTER;
     
@@ -189,8 +187,6 @@ public class SSHform extends javax.swing.JFrame {
                     String result = sshConnector.executeCommand("config t\n int f0/0." + vlanText.getText() + "\n encapsulation dot1q " + vlanText.getText() + " \n description VLAN-DE-EMPRESA-" + empresaText.getText() + " \n"+"do wr  \n\n    ");
                     if (result.equals(null)||result.equals("")){
                         JOptionPane.showMessageDialog(null, "VLAN"+vlanText.getText().toString()+"creada exitosamente en la ciudad "+ciudadText.getText().toString()+" para\n la empresa "+empresaText.getText().toString());
-                        String evento = "VLAN"+vlanText.getText().toString()+"creada exitosamente en la ciudad "+ciudadText.getText().toString()+" para la empresa "+empresaText.getText().toString();
-                        RegistrarEvento = new Registro(evento);
                     }
                     sshConnector.disconnect();
 
