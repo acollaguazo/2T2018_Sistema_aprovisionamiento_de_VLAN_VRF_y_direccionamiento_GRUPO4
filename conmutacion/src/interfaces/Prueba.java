@@ -7,6 +7,7 @@ package interfaces;
 
 import clases.Conectar;
 import clases.Consulta;
+import clases.Registro;
 import clases.SSHConnector;
 import clases.User;
 import java.io.*;
@@ -30,6 +31,7 @@ public class Prueba extends javax.swing.JFrame {
 
     public static ArrayList<User> usuariosBD = new ArrayList<User>();
     Conectar con;
+    Registro RegistroEvento;
     Consulta consulta;
     SSHConnector sshConnector;
     SSHform sshform;
@@ -169,42 +171,11 @@ public class Prueba extends javax.swing.JFrame {
 //
 //                            System.out.println(ex.getMessage());
 //                        }
-                        //Obtener la hora y fecha actual
-                        //Fecha
-                        Date sistFecha = new Date();
-                        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MMM-YYYY");
-                        //Hora
-                        Date sistHora = new Date();
-                        SimpleDateFormat formatoHora = new SimpleDateFormat("hh:mm:ss a");
-                        Calendar hoy = Calendar.getInstance();
+                                                    //escribir usuario que ingreso al sistema
+                            String evento = "Ingreso del usuario:  " + jTextField1.getText();
+                            RegistroEvento = new Registro(evento);
 
-                        //Guarda el registro de ingreso del usuario
-                        try {
-                            File archivo;
-                            FileWriter escribir;
-                            PrintWriter linea;
-
-                            archivo = new File("Registro.txt");
-                            if (!archivo.exists()) {
-                                archivo.createNewFile();
-                            }
-                            escribir = new FileWriter(archivo, true);
-                            linea = new PrintWriter(escribir);
-                            //escribir fecha y hora
-                            linea.println(formatoFecha.format(sistFecha) + "  " + String.format(formatoHora.format(sistHora), hoy));
-                            //escribir usuario que ingreso al sistema
-                            linea.println("Ingreso del usuario:  " + jTextField1.getText());
-
-                            linea.close();
-                            escribir.close();
-
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Error al guaradar el registro");
-                        }
-
-                        sshform.setVisible(true);
-                        this.dispose();
-                    }
+                           
                     sshform.setVisible(true);
                     this.setVisible(false);
 
