@@ -740,7 +740,7 @@ public class Administracion extends javax.swing.JFrame {
                 }
                 System.out.println(PE_SSH.toString());
                 sshConnector.connect(user, PE_SSH, 22);
-                sshConnector.executeCommand2("config t\nip vrf "+nombreVRF+"\nrd 1:"+vlan+"\nroute-target export 1:"+vlan+"\nroute-target import 1:"+vlan +"\nint f0/0."+vlan+"\nip vrf forwarding "+nombreVRF+"\ndo wr\n"+""+"\ndo wr\n\n " );
+                sshConnector.executeCommand("config t\nip vrf "+nombreVRF+"\nrd 1:"+vlan+"\nroute-target export 1:"+vlan+"\nroute-target import 1:"+vlan +"\nint f0/0."+vlan+"\nip vrf forwarding "+nombreVRF+"\ndo wr\n"+""+"\ndo wr\n\n " );
                 sshConnector.disconnect();
                 JOptionPane.showMessageDialog(null, "se creo" + nombreVRF + " para la empresa " + empresa + " con vlan " + vlan);
             } catch (JSchException e) {
