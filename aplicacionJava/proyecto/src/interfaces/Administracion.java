@@ -79,6 +79,19 @@ public class Administracion extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jComboBox4 = new javax.swing.JComboBox<>();
         jComboBox5 = new javax.swing.JComboBox<>();
+        jLabel11 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jComboBox7 = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jComboBox8 = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        jComboBox9 = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jComboBox10 = new javax.swing.JComboBox<>();
+        jLabel16 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
 
         jLabel3.setText("jLabel3");
 
@@ -154,6 +167,57 @@ public class Administracion extends javax.swing.JFrame {
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione..." }));
 
+        jLabel11.setText("Empresa");
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setText("Asignar Enlaces");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione..." }));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Ciudad");
+
+        jComboBox7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", " " }));
+        jComboBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox7ActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("VLAN");
+
+        jComboBox8.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione..." }));
+
+        jLabel14.setText("VRF");
+
+        jComboBox9.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione..." }));
+        jComboBox9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox9ActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setText("ROUTER (PE)");
+
+        jComboBox10.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione..." }));
+
+        jLabel16.setText("Enlaces");
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,13 +240,8 @@ public class Administracion extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jRadioButton2)
                                         .addGap(6, 6, 6)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(layout.createSequentialGroup()
@@ -194,20 +253,60 @@ public class Administracion extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addGap(0, 13, Short.MAX_VALUE)
                                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(96, 96, 96))))
+                                        .addGap(96, 96, 96))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                    .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addGap(0, 0, Short.MAX_VALUE))
+                                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                        .addGap(0, 0, Short.MAX_VALUE)
+                                                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                    .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(jLabel11)
+                                                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                                                .addGap(18, 18, 18))
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabel12)
+                                                                .addGap(35, 35, 35)))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(jLabel13)
+                                                            .addGap(50, 50, 50)))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(50, 50, 50)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jComboBox4, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jComboBox6, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jComboBox7, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jComboBox8, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jComboBox9, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel15)
+                                                    .addComponent(jLabel16))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jComboBox10, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jTextField2))))
+                                        .addGap(0, 108, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(91, 91, 91)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jRadioButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -245,7 +344,7 @@ public class Administracion extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,8 +359,34 @@ public class Administracion extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addComponent(jRadioButton3)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(jComboBox8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jComboBox9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jComboBox10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -410,16 +535,9 @@ public class Administracion extends javax.swing.JFrame {
             }
         } else if (jRadioButton2.isSelected()) {
             if (!(jComboBox2.getSelectedItem().toString().equals("seleccione...")) && !(jComboBox3.getSelectedItem().toString().equals("seleccione...")) && !(jComboBox4.getSelectedItem().toString().equals("seleccione..."))) {
-                String nombreVRF = obtenerVRF();
+                String nombreVRF = obtenerVRF(jComboBox9,jComboBox2);
                 if (nombreVRF.equals("no_existe")) {
-//                    conDB = new ConectorDB();
-//                    Connection reg = conDB.getConnection();
-//                    Registro r = new Registro();
-//                    nombreVRF = "VRF_" + jComboBox2.getSelectedItem().toString() + "_" + jComboBox3.getSelectedItem().toString();
-//                    System.out.println(nombreVRF);
-//                    r.registrarVRF(reg, nombreVRF, Integer.parseInt(jComboBox3.getSelectedItem().toString()), jComboBox4.getSelectedItem().toString(), jComboBox2.getSelectedItem().toString());
-//                    JOptionPane.showMessageDialog(null, "se creo" + nombreVRF + "PARA la empresa " + jComboBox2.getSelectedItem().toString() + " con vlan " + jComboBox3.getSelectedItem().toString());
-                      registrarvrfBD_R(Integer.parseInt(jComboBox3.getSelectedItem().toString()),jComboBox2.getSelectedItem().toString(),jComboBox4.getSelectedItem().toString());
+                    registrarvrfBD_R(Integer.parseInt(jComboBox3.getSelectedItem().toString()), jComboBox2.getSelectedItem().toString(), jComboBox4.getSelectedItem().toString());
                 } else {
                     JOptionPane.showMessageDialog(null, "existe VRF" + nombreVRF + "PARA la empresa " + jComboBox2.getSelectedItem().toString() + " seleccionada");
                 }
@@ -428,7 +546,10 @@ public class Administracion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
             }
 
-        } else {
+        }else if(jRadioButton3.isSelected()){
+            
+        } 
+        else {
             System.out.println("DEBE SELECCIONAR ALGO");
         }
         for (int z : nvlan) {
@@ -445,9 +566,65 @@ public class Administracion extends javax.swing.JFrame {
         if (jComboBox2.getSelectedItem().toString().equals("Seleccione...")) {
             JOptionPane.showMessageDialog(null, "Primero seleccione empresa");
         } else {
-            asignandoVLANComboBox();
+            asignandoVLANComboBox(jComboBox3,jComboBox2,jComboBox4);
         }
     }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        //AsignaEmpresaJCombo();
+        AsignaCampoJcombo(jComboBox6, "empresa", "razonSocial");
+        //AsignarCiudadJCombo();
+        AsignaCampoJcombo(jComboBox7, "ciudad", "nombre");
+        AsignaCampoJcombo(jComboBox10, "providerEdge", "nombrePE");
+        if (jRadioButton3.isSelected()) {
+            jLabel11.setVisible(true);
+            jLabel12.setVisible(true);
+            jLabel13.setVisible(true);
+            jLabel14.setVisible(true);
+            jLabel15.setVisible(true);
+            jLabel16.setVisible(true);
+            jComboBox6.setVisible(true);
+            jComboBox7.setVisible(true);
+            jComboBox8.setVisible(true);
+            jComboBox9.setVisible(true);
+            jComboBox10.setVisible(true);
+            jTextField2.setVisible(true);
+            jLabel4.setVisible(false);
+            jLabel5.setVisible(false);
+            jLabel7.setVisible(false);
+            jLabel8.setVisible(false);
+            jLabel9.setVisible(false);
+            jLabel10.setVisible(false);
+            jComboBox1.setVisible(false);
+            jComboBox2.setVisible(false);
+            jComboBox3.setVisible(false);
+            jComboBox4.setVisible(false);
+            jTextField1.setVisible(false);
+            jComboBox5.setVisible(false);
+
+        }
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
+        if (jComboBox6.getSelectedItem().toString().equals("Seleccione...")) {
+            JOptionPane.showMessageDialog(null, "Primero seleccione empresa");
+        } else {
+            asignandoVLANComboBox(jComboBox8,jComboBox6,jComboBox7);
+            
+        }
+    }//GEN-LAST:event_jComboBox7ActionPerformed
+
+    private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox9ActionPerformed
+
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        obtenerVRF(jComboBox9, jComboBox6);
+    }//GEN-LAST:event_jComboBox6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -490,12 +667,23 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox10;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
+    private javax.swing.JComboBox<String> jComboBox7;
+    private javax.swing.JComboBox<String> jComboBox8;
+    private javax.swing.JComboBox<String> jComboBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -506,9 +694,11 @@ public class Administracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
     public void setPE(PE pe) {
@@ -545,6 +735,19 @@ public class Administracion extends javax.swing.JFrame {
         jComboBox4.setVisible(false);
         jTextField1.setVisible(false);
         jComboBox5.setVisible(false);
+
+        jLabel11.setVisible(false);
+        jLabel12.setVisible(false);
+        jLabel13.setVisible(false);
+        jLabel14.setVisible(false);
+        jLabel15.setVisible(false);
+        jLabel16.setVisible(false);
+        jComboBox6.setVisible(false);
+        jComboBox7.setVisible(false);
+        jComboBox8.setVisible(false);
+        jComboBox9.setVisible(false);
+        jComboBox10.setVisible(false);
+        jTextField2.setVisible(false);
     }
 
     public void AsignaCampoJcombo(JComboBox jCombo, String nombreTabla, String nombreCampo) {
@@ -628,13 +831,12 @@ public class Administracion extends javax.swing.JFrame {
             ResultSet rs = consulta.getResultSetTabla(reg, "vlan");
             if (rs != null) {
                 while (rs.next()) {
-                    if (jComboBox5.getSelectedItem().toString().equals(rs.getString("ciudad"))) {
-                        if (jComboBox1.getSelectedItem().toString().equals(rs.getString("empresa"))) {
-                            rs.close();
-                            reg.close();
-                            conDB.desconectar();
-                            return true;
-                        }
+                    if (jComboBox5.getSelectedItem().toString().equals(rs.getString("ciudad"))
+                            && jComboBox1.getSelectedItem().toString().equals(rs.getString("empresa"))) {
+                        rs.close();
+                        reg.close();
+                        conDB.desconectar();
+                        return true;
                     }
                 }
             } else {
@@ -650,7 +852,11 @@ public class Administracion extends javax.swing.JFrame {
         return false;
     }
 
-    public void asignandoVLANComboBox() {
+    public void asignandoVLANComboBox(JComboBox jComboVLAN,JComboBox jComboEmpresa,JComboBox jComboCiudad) {
+        jComboVLAN.removeAllItems();
+        jComboVLAN.addItem("Seleccione...");
+        
+
         try {
             conDB = new ConectorDB();
             Connection reg = conDB.getConnection();
@@ -658,8 +864,9 @@ public class Administracion extends javax.swing.JFrame {
             ResultSet rs = consulta.getResultSetTabla(reg, "vlan");
             if (rs != null) {
                 while (rs.next()) {
-                    if ((jComboBox2.getSelectedItem().toString().equals(rs.getString("empresa"))) && (jComboBox4.getSelectedItem().toString().equals(rs.getString("ciudad")))) {
-                        jComboBox3.addItem(rs.getString("N_vlan"));
+                    if ((jComboEmpresa.getSelectedItem().toString().equals(rs.getString("empresa"))) && (jComboCiudad.getSelectedItem().toString().equals(rs.getString("ciudad")))) {
+                        jComboVLAN.addItem(rs.getString("N_vlan"));
+                        
                     }
 
                 }
@@ -697,9 +904,9 @@ public class Administracion extends javax.swing.JFrame {
                 }
                 System.out.println(PE_SSH.toString());
                 sshConnector.connect(user, PE_SSH, 22);
-                //sshConnector.executeCommand2("conf t\n" + "int f0/0." + vlan + "\n" + "encapsulation dot1q " + vlan + "\n" + "description VLAN-DE-EMPRESA-" + empresa + "\n" + "do wr \n\n");
+                
                 String result = sshConnector.executeCommand("conf t\n" + "int f0/0." + vlan + "\n" + "encapsulation dot1q " + vlan + "\n" + "description VLAN-DE-EMPRESA-" + empresa + "\n" + "do wr \n\n");
-                //jTextArea1.setText(result);
+                jTextArea1.setText(result);
                 sshConnector.disconnect();
                 if (option == -1) {
                     JOptionPane.showMessageDialog(null, "VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
@@ -719,45 +926,45 @@ public class Administracion extends javax.swing.JFrame {
         }
     }
 
-    public void registrarvrfBD_R(int vlan,String empresa,String ciudad) {
+    public void registrarvrfBD_R(int vlan, String empresa, String ciudad) {
         conDB = new ConectorDB();
         Connection reg = conDB.getConnection();
         Registro r = new Registro();
-        String nombreVRF = "VRF_" + empresa + "_" + vlan+"";
+        String nombreVRF = "VRF_" + empresa + "_" + vlan + "";
         System.out.println(nombreVRF);
         r.registrarVRF(reg, nombreVRF, vlan, ciudad, empresa);
-        
+
         try {
-                PE PE_SSH = null;
+            PE PE_SSH = null;
 
-                sshConnector = new SSHConnector();
-                for (PE pe : Inicio.pes) {
+            sshConnector = new SSHConnector();
+            for (PE pe : Inicio.pes) {
 
-                    if (ciudad.equals(pe.getCiudad())) {
-                        PE_SSH = new PE(pe.getNombre(), pe.getCiudad(), pe.getDireccionIP());
-                        break;
-                    }
+                if (ciudad.equals(pe.getCiudad())) {
+                    PE_SSH = new PE(pe.getNombre(), pe.getCiudad(), pe.getDireccionIP());
+                    break;
                 }
-                System.out.println(PE_SSH.toString());
-                sshConnector.connect(user, PE_SSH, 22);
-                sshConnector.executeCommand("config t\nip vrf "+nombreVRF+"\nrd 1:"+vlan+"\nroute-target export 1:"+vlan+"\nroute-target import 1:"+vlan +"\nint f0/0."+vlan+"\nip vrf forwarding "+nombreVRF+"\ndo wr\n"+""+"\ndo wr\n\n " );
-                sshConnector.disconnect();
-                JOptionPane.showMessageDialog(null, "se creo" + nombreVRF + " para la empresa " + empresa + " con vlan " + vlan);
-            } catch (JSchException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-        
-        
-        
-        
+            System.out.println(PE_SSH.toString());
+            sshConnector.connect(user, PE_SSH, 22);
+            String result = sshConnector.executeCommand("config t\nip vrf " + nombreVRF + "\nrd 1:" + vlan + "\nroute-target export 1:" + vlan + "\nroute-target import 1:" + vlan + "\nint f0/0." + vlan + "\nip vrf forwarding " + nombreVRF + "\ndo wr\n" + "" + "\ndo wr\n\n ");
+            jTextArea1.setText(result);
+            sshConnector.disconnect();
+            JOptionPane.showMessageDialog(null, "se creo" + nombreVRF + " para la empresa " + empresa + " con vlan " + vlan);
+        } catch (JSchException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
-    public String obtenerVRF() {
+    public String obtenerVRF(JComboBox jComboVRF, JComboBox jComboEmpresa ) {
+        jComboVRF.removeAllItems();
+        jComboVRF.addItem("Seleccione...");
+        
         String nombreVRF = "no_existe";
         try {
             conDB = new ConectorDB();
@@ -772,8 +979,10 @@ public class Administracion extends javax.swing.JFrame {
 
                 while (rs.next()) {
 
-                    if (jComboBox2.getSelectedItem().toString().equals(rs.getString("empresa"))) {
+                    if (jComboEmpresa.getSelectedItem().toString().equals(rs.getString("empresa"))) {
                         nombreVRF = rs.getString("nombreVRF");
+                        jComboVRF.addItem(rs.getString("nombreVRF"));
+                        break;
                     }
                 }
             } else {
@@ -784,6 +993,7 @@ public class Administracion extends javax.swing.JFrame {
             reg.close();
             conDB.desconectar();
         } catch (Exception e) {
+            System.out.println("abc");
             e.printStackTrace();
         }
         return nombreVRF;

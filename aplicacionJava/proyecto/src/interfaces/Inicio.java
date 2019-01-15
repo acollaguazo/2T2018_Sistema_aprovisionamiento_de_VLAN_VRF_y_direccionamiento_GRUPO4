@@ -129,8 +129,9 @@ public class Inicio extends javax.swing.JFrame {
                             try {
                                 System.out.println(pe.toString());
                                 sshConnector.connect(user, pe, 22);
-                                sshConnector.executeCommand("show run\n       ");
-                                //String result = sshConnector.executeCommand("show run\n       ");
+                                String inicioshow=sshConnector.executeCommand("");
+                                System.out.println(inicioshow);
+                                
                                 adminForm=new Administracion();
                                 adminForm.setPE(pe);
                                 adminForm.setUser(user);
@@ -140,7 +141,7 @@ public class Inicio extends javax.swing.JFrame {
                                 adminForm.setVisible(true);
                                 this.setVisible(false);
                                 sshConnector.disconnect();
-                                //if(sshConnector.getSesion().isConnected()){sshConnector.disconnect();}
+                                
                                 
                             } catch (JSchException E) {
                                 JOptionPane.showMessageDialog(null, "problemas de conexion SSH, intentelo mas tarde");

@@ -49,55 +49,72 @@ public class SSHConnector {
             throw new IllegalAccessException("Sesion SSH ya iniciada.");
         }
     }
-
+    
     public final String executeCommand(String comandos)
-            throws IllegalAccessException, JSchException, IOException {
+        throws IllegalAccessException, JSchException, IOException {
         if (this.session != null && this.session.isConnected()) {
-            
-            String[] c=comandos.split(ENTER_KEY);
-            
+            String[] lineasC=comandos.split(ENTER_KEY);
             // Abrimos un canal SSH. Es como abrir una consola.
             Channel channelExec = (Channel) this.session.openChannel("shell");
-
-            OutputStream out = channelExec.getOutputStream();
+            
+            OutputStream out= channelExec.getOutputStream();
             PrintStream commander = new PrintStream(out, true);
 
-            channelExec.setOutputStream(System.out, true);
+            channelExec .setOutputStream(System.out, true);
 
             channelExec.connect();
-//            for(String linea:c){
-//                System.out.println(linea);
-//                commander.println(linea);
-//            }
-            commander.println(comandos);
-            commander.println("");
+            for(String z:lineasC){
+                System.out.print(z+",");
+                commander.println(z);    
+            }
+            System.out.println();
+            //Crear Vrf
+            
+//                commander.println("enable");    
+//                commander.println("configure terminal");
+//                commander.println("ip vrf CE-ABC");
+//                
+//                commander.println("end");
+//                commander.println("show ip vrf");
+        
 
+
+                
             commander.close();
-
+        
+            String salida="";
+            if(!comandos.equals("")){
+            
 //            
 //           InputStream in = channelExec.getInputStream();
-            InputStream in = channelExec.getInputStream();
-
+           InputStream in = channelExec.getInputStream();
+           
+          
             // Obtenemos el texto impreso en la consola.
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            StringBuilder builder = new StringBuilder();
-            
-            channelExec.disconnect();
+            //StringBuilder builder = new StringBuilder();
             
             String linea;
+            
+        
+              
             while ((linea = reader.readLine()) != null) {
-                builder.append(linea);
-                builder.append(ENTER_KEY);
+                salida=salida+linea+"\n";      
+            }
+            
+            ;
             }
             // Cerramos el canal SSH.
-            //channelExec.disconnect();
-
+            channelExec.disconnect();
+               
             // Retornamos el texto impreso en la consola.
-            return builder.toString();
+            
+            return salida;
         } else {
             throw new IllegalAccessException("No existe sesion SSH iniciada.");
         }
     }
+    
 
     /**
      * Cierra la sesión SSH.
@@ -110,6 +127,8 @@ public class SSHConnector {
     public Session getSesion(){
         return this.session;
     }
+    
+    
     
     
 }
