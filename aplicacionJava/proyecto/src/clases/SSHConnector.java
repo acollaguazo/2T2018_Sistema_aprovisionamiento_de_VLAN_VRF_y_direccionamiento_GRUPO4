@@ -111,39 +111,5 @@ public class SSHConnector {
         return this.session;
     }
     
-    public final void executeCommand2(String comandos)
-            throws IllegalAccessException, JSchException, IOException {
-        if (this.session != null && this.session.isConnected()) {
-            
-            String[] c=comandos.split(ENTER_KEY);
-            
-            // Abrimos un canal SSH. Es como abrir una consola.
-            Channel channelExec = (Channel) this.session.openChannel("shell");
-
-            OutputStream out = channelExec.getOutputStream();
-            PrintStream commander = new PrintStream(out, true);
-
-            channelExec.setOutputStream(System.out, true);
-
-            channelExec.connect();
-            for(String linea:c){
-                System.out.print(linea+",");
-                commander.println(linea);
-            }
-            commander.println("");
-            
-            //out.close();
-            commander.close();
-            
-            // Cerramos el canal SSH.
-            channelExec.disconnect();
-
-
-//            
-//           
-        } else {
-            throw new IllegalAccessException("No existe sesion SSH iniciada.");
-        }
-    }
-
+    
 }

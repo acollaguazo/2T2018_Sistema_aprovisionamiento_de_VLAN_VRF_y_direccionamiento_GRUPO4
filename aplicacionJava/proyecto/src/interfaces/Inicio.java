@@ -129,7 +129,7 @@ public class Inicio extends javax.swing.JFrame {
                             try {
                                 System.out.println(pe.toString());
                                 sshConnector.connect(user, pe, 22);
-                                sshConnector.executeCommand2("show run\n       ");
+                                sshConnector.executeCommand("show run\n       ");
                                 //String result = sshConnector.executeCommand("show run\n       ");
                                 adminForm=new Administracion();
                                 adminForm.setPE(pe);
