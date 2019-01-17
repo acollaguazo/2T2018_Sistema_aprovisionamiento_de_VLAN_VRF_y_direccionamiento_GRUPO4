@@ -555,7 +555,12 @@ public class Administracion extends javax.swing.JFrame {
             }
 
         } else if (jRadioButton3.isSelected()) {
-            asignarEnlace();
+            if (!(jComboBox6.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox7.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox8.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox9.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox10.getSelectedItem().toString().equals("Seleccione...")) && !(jTextField2.getText().equals(""))) {
+                asignarEnlace();
+            } else {
+                JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
+            }
+
         } else {
             System.out.println("DEBE SELECCIONAR ALGO");
         }
@@ -578,9 +583,9 @@ public class Administracion extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        //AsignaEmpresaJCombo();
+
         AsignaCampoJcombo(jComboBox6, "empresa", "razonSocial");
-        //AsignarCiudadJCombo();
+
         AsignaCampoJcombo(jComboBox7, "ciudad", "nombre");
         AsignaCampoJcombo(jComboBox10, "providerEdge", "nombrePE");
         if (jRadioButton3.isSelected()) {
@@ -1007,13 +1012,7 @@ public class Administracion extends javax.swing.JFrame {
     }
 
     public void asignarEnlace() {
-        // byteIP1.byteIP2.byteIP3.byteIP4
-        //  10    .   10  .  10  .   0
-        int byteIP1=10;
-        int byteIP2=10;
-        int byteIP3=10;
-        int byteIP4=0;
-        String red="";
+
         try {
 
             conDB = new ConectorDB();
@@ -1024,10 +1023,10 @@ public class Administracion extends javax.swing.JFrame {
             if (rs != null) {
                 if (rs.next()) {
                     while (rs.next()) {
-                        
+
                     }
                 } else {
-                    
+
                 }
 
             } else {
