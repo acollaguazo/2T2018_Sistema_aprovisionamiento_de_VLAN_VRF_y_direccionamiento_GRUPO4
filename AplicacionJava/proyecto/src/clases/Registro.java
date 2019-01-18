@@ -59,8 +59,8 @@ public class Registro {
         }
     }
     
-    public void registrarDireccionamiento(Connection con,String dir_red,String submask_red,String empresa, String ciudad,int vlan,String nombreVRF,String nombrePE) {
-        String SQL = "insert into VRF (dir_red,submask_red,empresa,ciudad,vlan,nombreVRF,nombrePE)" + " values(?,?,?,?,?,?,?)";
+    public void registrarDireccionamiento(Connection con,String dir_red,String submask_red,String empresa, String ciudad,int vlan,String nombreVRF,String nombrePE, int enlaces) {
+        String SQL = "insert into VRF (dir_red,submask_red,empresa,ciudad,vlan,nombreVRF,nombrePE,enlaces)" + " values(?,?,?,?,?,?,?,?)";
         try {
             
             stmt = con.createStatement();
@@ -72,6 +72,7 @@ public class Registro {
             psInsertar.setInt(5, vlan);
             psInsertar.setString(6, nombreVRF);
             psInsertar.setString(7, nombrePE);
+            psInsertar.setInt(8, enlaces);
             
             psInsertar.executeUpdate();
 
