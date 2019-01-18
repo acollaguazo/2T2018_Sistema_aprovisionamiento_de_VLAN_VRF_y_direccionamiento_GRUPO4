@@ -7,6 +7,7 @@ package interfaces;
 
 import clases.ConectorDB;
 import clases.Consulta;
+import clases.Direccionamiento;
 import clases.PE;
 import clases.Registro;
 import clases.SSHConnector;
@@ -561,36 +562,6 @@ public class Administracion extends javax.swing.JFrame {
             if (!(jComboBox6.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox7.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox8.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox9.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox10.getSelectedItem().toString().equals("Seleccione...")) && !(jTextField2.getText().equals(""))) {
                 try {
 
-                    numero_Enlaces_Empresa = Integer.parseInt(jTextField2.getText());
-                    Vlan_Empresa = Integer.parseInt(jComboBox8.getSelectedItem().toString());
-
-                    //obtencion de los 3 primeros octetos de la subred
-                    ArrayList<Integer> lista_binario_vlan = new ArrayList<Integer>();
-                    //funcion devuelve un arreglo de la vlan en binario
-                    lista_binario_vlan = binario_list(Vlan_Empresa, 13);
-                    int primer_octeto = 10;
-                    int segundo_octeto = lista_binario_vlan.get(0) + 2 * lista_binario_vlan.get(1) + 4 * lista_binario_vlan.get(2) + 8 * lista_binario_vlan.get(3) + 16 * lista_binario_vlan.get(4);
-                    int tercer_octeto = 128 * lista_binario_vlan.get(5) + 64 * lista_binario_vlan.get(6) + 32 * lista_binario_vlan.get(7) + 16 * lista_binario_vlan.get(8)
-                            + 8 * lista_binario_vlan.get(9) + 4 * lista_binario_vlan.get(10) + 2 * lista_binario_vlan.get(11) + lista_binario_vlan.get(12);
-                    int cuarto_octeto = 0;
-                    //calculo de numero de enlaces lo que da la dirección del cuarto octeto
-//                    ArrayList<Integer> lista_binario_enlaces = new ArrayList<Integer>();
-//                    lista_binario_enlaces = binario_list(numero_Enlaces_Empresa, 8);
-                    //Mascara para la subred
-                    int primero_mascara = 255, segundo_mascara = 255, tercero_mascara = 255;
-                    int cuarto_mascara = 255;
-                    int numero_Enlaces_Existente=23;//Valor sacado de la base de datos
-                    for (int i = 1; i < 9; i++) {
-                        if ((numero_Enlaces_Empresa + 2+numero_Enlaces_Existente) < Math.pow(2, i)) {
-                            cuarto_mascara = 256 - (int) Math.pow(2, i);
-                            i = 9;
-                        }
-                    }
-                    String red = primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto;
-                    String mask = primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara;
-                    System.out.println("IP: " + primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto);
-                    System.out.println("MASCARA: " + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara);
-
                     sshConnector = new SSHConnector();
                     sshConnector.connect(user, pe, 22);
                     String result = sshConnector.executeCommand("");
@@ -1062,7 +1033,7 @@ public class Administracion extends javax.swing.JFrame {
     }
 
     public void asignarEnlace() {
-
+        Direccionamiento dir=null;
         try {
 
             conDB = new ConectorDB();
@@ -1071,13 +1042,13 @@ public class Administracion extends javax.swing.JFrame {
             ResultSet rs = consulta.getResultSetTabla(reg, "direccionamiento");
             System.out.println("2");
             if (rs != null) {
-                if (rs.next()) {
-                    while (rs.next()) {
-
+                while (rs.next()) {
+                    if(jComboBox6.getSelectedItem().toString().equals(rs.getString("empresa"))){
+                        dir=new Direccionamiento(rs.getString("dir_red"),rs.getString("submask_red"),rs.getString("empresa"),rs.getString("ciudad"),rs.getInt("vlan"),rs.getString("nombreVRF"),rs.getString("nombrePE"), rs.getInt("enlaces"));
+                        break;
                     }
-                } else {
-
                 }
+                
 
             } else {
                 System.out.println("ERROR");
@@ -1085,6 +1056,42 @@ public class Administracion extends javax.swing.JFrame {
             rs.close();
             reg.close();
             conDB.desconectar();
+            //if(){}
+            
+            
+                    numero_Enlaces_Empresa = Integer.parseInt(jTextField2.getText());
+                    Vlan_Empresa = Integer.parseInt(jComboBox8.getSelectedItem().toString());
+
+                    //obtencion de los 3 primeros octetos de la subred
+                    ArrayList<Integer> lista_binario_vlan = new ArrayList<Integer>();
+                    //funcion devuelve un arreglo de la vlan en binario
+                    lista_binario_vlan = binario_list(Vlan_Empresa, 13);
+                    int primer_octeto = 10;
+                    int segundo_octeto = lista_binario_vlan.get(0) + 2 * lista_binario_vlan.get(1) + 4 * lista_binario_vlan.get(2) + 8 * lista_binario_vlan.get(3) + 16 * lista_binario_vlan.get(4);
+                    int tercer_octeto = 128 * lista_binario_vlan.get(5) + 64 * lista_binario_vlan.get(6) + 32 * lista_binario_vlan.get(7) + 16 * lista_binario_vlan.get(8)
+                            + 8 * lista_binario_vlan.get(9) + 4 * lista_binario_vlan.get(10) + 2 * lista_binario_vlan.get(11) + lista_binario_vlan.get(12);
+                    int cuarto_octeto = 0;
+                    //calculo de numero de enlaces lo que da la dirección del cuarto octeto
+                    //Mascara para la subred
+                    int primero_mascara = 255, segundo_mascara = 255, tercero_mascara = 255;
+                    int cuarto_mascara = 255;
+                    int numero_Enlaces_Existente=23;//Valor sacado de la base de datos
+                    for (int i = 1; i < 9; i++) {
+                        if ((numero_Enlaces_Empresa + 2+numero_Enlaces_Existente) < Math.pow(2, i)) {
+                            cuarto_mascara = 256 - (int) Math.pow(2, i);
+                            i = 9;
+                        }
+                    }
+                    String red = primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto;
+                    String mask = primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara;
+                    System.out.println("IP: " + primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto);
+                    System.out.println("MASCARA: " + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara);
+
+            
+            
+            
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
