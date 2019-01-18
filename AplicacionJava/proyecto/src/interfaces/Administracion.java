@@ -37,6 +37,9 @@ public class Administracion extends javax.swing.JFrame {
     Consulta consulta;
     ArrayList<Integer> nvlan = new ArrayList<Integer>();
 
+    private int numero_Enlaces_Empresa;
+    private int Vlan_Empresa;
+
     /**
      * Creates new form Administracion
      */
@@ -557,18 +560,43 @@ public class Administracion extends javax.swing.JFrame {
         } else if (jRadioButton3.isSelected()) {
             if (!(jComboBox6.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox7.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox8.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox9.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox10.getSelectedItem().toString().equals("Seleccione...")) && !(jTextField2.getText().equals(""))) {
                 try {
-                    
+
+                    numero_Enlaces_Empresa = Integer.parseInt(jTextField2.getText());
+                    Vlan_Empresa = Integer.parseInt(jComboBox8.getSelectedItem().toString());
+
+                    //obtencion de los 3 primeros octetos de la subred
+                    ArrayList<Integer> lista_binario_vlan = new ArrayList<Integer>();
+                    //funcion devuelve un arreglo de la vlan en binario
+                    lista_binario_vlan = binario_list(Vlan_Empresa, 13);
+                    int primer_octeto = 10;
+                    int segundo_octeto = lista_binario_vlan.get(0) + 2 * lista_binario_vlan.get(1) + 4 * lista_binario_vlan.get(2) + 8 * lista_binario_vlan.get(3) + 16 * lista_binario_vlan.get(4);
+                    int tercer_octeto = 128 * lista_binario_vlan.get(5) + 64 * lista_binario_vlan.get(6) + 32 * lista_binario_vlan.get(7) + 16 * lista_binario_vlan.get(8)
+                            + 8 * lista_binario_vlan.get(9) + 4 * lista_binario_vlan.get(10) + 2 * lista_binario_vlan.get(11) + lista_binario_vlan.get(12);
+                    int cuarto_octeto = 0;
+                    //calculo de numero de enlaces lo que da la dirección del cuarto octeto
+//                    ArrayList<Integer> lista_binario_enlaces = new ArrayList<Integer>();
+//                    lista_binario_enlaces = binario_list(numero_Enlaces_Empresa, 8);
+                    //Mascara para la subred
+                    int primero_mascara = 255, segundo_mascara = 255, tercero_mascara = 255;
+                    int cuarto_mascara = 255;
+                    int numero_Enlaces_Existente=23;//Valor sacado de la base de datos
+                    for (int i = 1; i < 9; i++) {
+                        if ((numero_Enlaces_Empresa + 2+numero_Enlaces_Existente) < Math.pow(2, i)) {
+                            cuarto_mascara = 256 - (int) Math.pow(2, i);
+                            i = 9;
+                        }
+                    }
+                    String red = primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto;
+                    String mask = primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara;
+                    System.out.println("IP: " + primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto);
+                    System.out.println("MASCARA: " + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara);
+
                     sshConnector = new SSHConnector();
-                    sshConnector.connect(user,pe, 22);
+                    sshConnector.connect(user, pe, 22);
                     String result = sshConnector.executeCommand("");
                     jTextArea1.setText(result);
                     sshConnector.disconnect();
-                    
-                    
-                    
-                    
-                    
-                    
+
                     asignarEnlace();
                 } catch (JSchException ex) {
                     JOptionPane.showMessageDialog(null, "Falla en la conexión con el dispositivo PE, inténtelo más tarde");
@@ -1061,13 +1089,32 @@ public class Administracion extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    public void seleccionarPE(String ciudad,JComboBox jComboPE){
-        if(ciudad.equals("UIO")){
+
+    public void seleccionarPE(String ciudad, JComboBox jComboPE) {
+        if (ciudad.equals("UIO")) {
             jComboPE.setSelectedItem("PE1-UIO");
+        } else if (ciudad.equals("ISP")) {
+
         }
-        else if(ciudad.equals("ISP")){
-            
+    }
+
+    private ArrayList<Integer> binario_list(int Vlan_Empresa, int cant_bits) {
+        int aux_vlan = Vlan_Empresa;
+        ArrayList<Integer> binario_vlan = new ArrayList<Integer>();
+        ArrayList<Integer> devolver = new ArrayList<Integer>();
+        int verificador;
+        for (int i = 0; i < cant_bits; i++) {
+            verificador = aux_vlan % 2;
+            aux_vlan = aux_vlan / 2;
+            if (verificador == 1) {
+                binario_vlan.add(1);
+            } else {
+                binario_vlan.add(0);
+            }
         }
+        for (int i = 0; i < cant_bits; i++) {
+            devolver.add(binario_vlan.get(cant_bits - 1 - i));
+        }
+        return devolver;
     }
 }
