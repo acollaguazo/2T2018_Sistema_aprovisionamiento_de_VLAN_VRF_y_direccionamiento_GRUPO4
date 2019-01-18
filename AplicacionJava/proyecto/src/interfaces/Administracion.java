@@ -559,14 +559,33 @@ public class Administracion extends javax.swing.JFrame {
             }
 
         } else if (jRadioButton3.isSelected()) {
+            
             if (!(jComboBox6.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox7.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox8.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox9.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox10.getSelectedItem().toString().equals("Seleccione...")) && !(jTextField2.getText().equals(""))) {
+                String empresa=jComboBox6.getSelectedItem().toString();
+                String ciudad=jComboBox7.getSelectedItem().toString();
+                int vlan=Integer.parseInt(jComboBox8.getSelectedItem().toString());
+                String vrf=jComboBox9.getSelectedItem().toString();
+                String router=jComboBox10.getSelectedItem().toString();
+                int noEnlace=0;
                 try {
+                    
+                    String enlace=asignarEnlace();
+                    if(enlace.equals("")){
+                        JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
+                    }
+                    else{
+                        String[] a=enlace.split(",");
+                        sshConnector = new SSHConnector();
+                        sshConnector.connect(user, pe, 22);
+                        String result = sshConnector.executeCommand("config t interface f0/1\n");
+                        jTextArea1.setText(result);
+                        sshConnector.disconnect();
+                        
+                    }
+                    
+                    
 
-                    sshConnector = new SSHConnector();
-                    sshConnector.connect(user, pe, 22);
-                    String result = sshConnector.executeCommand("");
-                    jTextArea1.setText(result);
-                    sshConnector.disconnect();
+                    
 
                     asignarEnlace();
                 } catch (JSchException ex) {
@@ -1032,23 +1051,24 @@ public class Administracion extends javax.swing.JFrame {
         return nombreVRF;
     }
 
-    public void asignarEnlace() {
-        Direccionamiento dir=null;
+    public String asignarEnlace() {
+        Direccionamiento dir = null;
+        int numero_Enlaces_Existentes = 0;
+        String lineassh = "";
+        String mensaje_de_aceptacion = "no";
         try {
-
             conDB = new ConectorDB();
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
             ResultSet rs = consulta.getResultSetTabla(reg, "direccionamiento");
-            System.out.println("2");
+
             if (rs != null) {
                 while (rs.next()) {
-                    if(jComboBox6.getSelectedItem().toString().equals(rs.getString("empresa"))){
-                        dir=new Direccionamiento(rs.getString("dir_red"),rs.getString("submask_red"),rs.getString("empresa"),rs.getString("ciudad"),rs.getInt("vlan"),rs.getString("nombreVRF"),rs.getString("nombrePE"), rs.getInt("enlaces"));
+                    if (jComboBox6.getSelectedItem().toString().equals(rs.getString("empresa"))) {
+                        dir = new Direccionamiento(rs.getString("dir_red"), rs.getString("submask_red"), rs.getString("empresa"), rs.getString("ciudad"), rs.getInt("vlan"), rs.getString("nombreVRF"), rs.getString("nombrePE"), rs.getInt("enlaces"));
                         break;
                     }
                 }
-                
 
             } else {
                 System.out.println("ERROR");
@@ -1056,45 +1076,85 @@ public class Administracion extends javax.swing.JFrame {
             rs.close();
             reg.close();
             conDB.desconectar();
-            //if(){}
-            
-            
-                    numero_Enlaces_Empresa = Integer.parseInt(jTextField2.getText());
-                    Vlan_Empresa = Integer.parseInt(jComboBox8.getSelectedItem().toString());
 
-                    //obtencion de los 3 primeros octetos de la subred
-                    ArrayList<Integer> lista_binario_vlan = new ArrayList<Integer>();
-                    //funcion devuelve un arreglo de la vlan en binario
-                    lista_binario_vlan = binario_list(Vlan_Empresa, 13);
-                    int primer_octeto = 10;
-                    int segundo_octeto = lista_binario_vlan.get(0) + 2 * lista_binario_vlan.get(1) + 4 * lista_binario_vlan.get(2) + 8 * lista_binario_vlan.get(3) + 16 * lista_binario_vlan.get(4);
-                    int tercer_octeto = 128 * lista_binario_vlan.get(5) + 64 * lista_binario_vlan.get(6) + 32 * lista_binario_vlan.get(7) + 16 * lista_binario_vlan.get(8)
-                            + 8 * lista_binario_vlan.get(9) + 4 * lista_binario_vlan.get(10) + 2 * lista_binario_vlan.get(11) + lista_binario_vlan.get(12);
-                    int cuarto_octeto = 0;
-                    //calculo de numero de enlaces lo que da la dirección del cuarto octeto
-                    //Mascara para la subred
-                    int primero_mascara = 255, segundo_mascara = 255, tercero_mascara = 255;
-                    int cuarto_mascara = 255;
-                    int numero_Enlaces_Existente=23;//Valor sacado de la base de datos
-                    for (int i = 1; i < 9; i++) {
-                        if ((numero_Enlaces_Empresa + 2+numero_Enlaces_Existente) < Math.pow(2, i)) {
-                            cuarto_mascara = 256 - (int) Math.pow(2, i);
-                            i = 9;
+            if (dir == null) {
+                mensaje_de_aceptacion = "no";
+            } else {
+                mensaje_de_aceptacion = "si";
+                numero_Enlaces_Existentes = dir.getEnlaces();
+            }
+
+            //La mascara del ISP puede ser 191.128.0.0/12
+            //obtencion de los 3 primeros octetos de la subred
+            numero_Enlaces_Empresa = Integer.parseInt(jTextField2.getText());
+            Vlan_Empresa = Integer.parseInt(jComboBox8.getSelectedItem().toString());
+
+            ArrayList<Integer> lista_binario_vlan = new ArrayList<Integer>();
+            //funcion devuelve un arreglo de la vlan en binario
+            lista_binario_vlan = binario_list(Vlan_Empresa, 13);
+            int primer_octeto = 10;
+            int segundo_octeto = lista_binario_vlan.get(0) + 2 * lista_binario_vlan.get(1) + 4 * lista_binario_vlan.get(2) + 8 * lista_binario_vlan.get(3) + 16 * lista_binario_vlan.get(4);
+            int tercer_octeto = 128 * lista_binario_vlan.get(5) + 64 * lista_binario_vlan.get(6) + 32 * lista_binario_vlan.get(7) + 16 * lista_binario_vlan.get(8)
+                    + 8 * lista_binario_vlan.get(9) + 4 * lista_binario_vlan.get(10) + 2 * lista_binario_vlan.get(11) + lista_binario_vlan.get(12);
+            int cuarto_octeto = 0;
+
+            //Mascara para la subred
+            int primero_mascara = 255, segundo_mascara = 255, tercero_mascara = 255;
+            int cuarto_mascara = 255;
+
+            //int numero_Enlaces_Existentes = dir.getEnlaces();//Valor sacado de la base de datos
+            for (int i = 1; i < 9; i++) {
+                if ((numero_Enlaces_Existentes + 2) < Math.pow(2, i)) {
+                    cuarto_mascara = 256 - (int) Math.pow(2, i);
+                    i = 9;
+                }
+            }
+            int cuarto_mascara_temporal = cuarto_mascara;
+            for (int i = 1; i < 9; i++) {
+                if ((numero_Enlaces_Empresa + 2 + numero_Enlaces_Existentes) < Math.pow(2, i)) {
+                    cuarto_mascara_temporal = 256 - (int) Math.pow(2, i);
+                    i = 9;
+                }
+            }
+            int nuevo_numero_de_enlaces = numero_Enlaces_Empresa + numero_Enlaces_Existentes;
+
+            if ((nuevo_numero_de_enlaces + 2) > 256) {
+                System.out.println("Excede el numero de enlaces disponibles en el ISP");
+                return "";
+            } else {
+                if (cuarto_mascara_temporal == cuarto_mascara) {
+                    cuarto_mascara = cuarto_mascara_temporal;
+                    System.out.println("se agrego mas enlaces dentro de la misma subred");
+                    return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
+                            + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
+                            + cuarto_mascara + "," + nuevo_numero_de_enlaces;
+                } else {
+
+                    if (mensaje_de_aceptacion == "si") {
+                        cuarto_mascara = cuarto_mascara_temporal;
+                        int closeSelected = JOptionPane.showConfirmDialog(null, "¿Desea asignar un nueva\n subred Si/No?", "Alerta", JOptionPane.YES_NO_OPTION);
+                        if (closeSelected == JOptionPane.YES_OPTION) {
+                            System.out.println("se cambio la mascara cuando habia enlaces anteriores");
+                            return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
+                                + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
+                                + cuarto_mascara + "," + nuevo_numero_de_enlaces;
+                        } else {
+                            return "";
                         }
+                    } else {
+                        
+                        return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
+                                + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
+                                + cuarto_mascara + "," + nuevo_numero_de_enlaces;
                     }
-                    String red = primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto;
-                    String mask = primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara;
-                    System.out.println("IP: " + primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto);
-                    System.out.println("MASCARA: " + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "." + cuarto_mascara);
+                }
+            }
 
-            
-            
-            
-            
             
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return lineassh;
     }
 
     public void seleccionarPE(String ciudad, JComboBox jComboPE) {
