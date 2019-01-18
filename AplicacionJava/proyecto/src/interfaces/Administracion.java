@@ -556,7 +556,28 @@ public class Administracion extends javax.swing.JFrame {
 
         } else if (jRadioButton3.isSelected()) {
             if (!(jComboBox6.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox7.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox8.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox9.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox10.getSelectedItem().toString().equals("Seleccione...")) && !(jTextField2.getText().equals(""))) {
-                asignarEnlace();
+                try {
+                    
+                    sshConnector = new SSHConnector();
+                    sshConnector.connect(user,pe, 22);
+                    String result = sshConnector.executeCommand("");
+                    jTextArea1.setText(result);
+                    sshConnector.disconnect();
+                    
+                    
+                    
+                    
+                    
+                    
+                    asignarEnlace();
+                } catch (JSchException ex) {
+                    JOptionPane.showMessageDialog(null, "Falla en la conexión con el dispositivo PE, inténtelo más tarde");
+                    Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
             }
