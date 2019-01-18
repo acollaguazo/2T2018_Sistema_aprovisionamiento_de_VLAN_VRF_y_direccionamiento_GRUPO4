@@ -626,6 +626,7 @@ public class Administracion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Primero seleccione empresa");
         } else {
             asignandoVLANComboBox(jComboBox8, jComboBox6, jComboBox7);
+            seleccionarPE(jComboBox7.getSelectedItem().toString(), jComboBox10);
 
         }
     }//GEN-LAST:event_jComboBox7ActionPerformed
@@ -1039,5 +1040,13 @@ public class Administracion extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    
+    public void seleccionarPE(String ciudad,JComboBox jComboPE){
+        if(ciudad.equals("UIO")){
+            jComboPE.setSelectedItem("PE1-UIO");
+        }
+        else if(ciudad.equals("ISP")){
+            
+        }
+    }
 }
