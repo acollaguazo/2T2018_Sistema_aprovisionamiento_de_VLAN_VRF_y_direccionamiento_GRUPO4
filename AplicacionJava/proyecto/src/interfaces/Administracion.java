@@ -559,33 +559,46 @@ public class Administracion extends javax.swing.JFrame {
             }
 
         } else if (jRadioButton3.isSelected()) {
-            
+
             if (!(jComboBox6.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox7.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox8.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox9.getSelectedItem().toString().equals("Seleccione...")) && !(jComboBox10.getSelectedItem().toString().equals("Seleccione...")) && !(jTextField2.getText().equals(""))) {
-                String empresa=jComboBox6.getSelectedItem().toString();
-                String ciudad=jComboBox7.getSelectedItem().toString();
-                int vlan=Integer.parseInt(jComboBox8.getSelectedItem().toString());
-                String vrf=jComboBox9.getSelectedItem().toString();
-                String router=jComboBox10.getSelectedItem().toString();
-                int noEnlace=0;
+                String empresa = jComboBox6.getSelectedItem().toString();
+                String ciudad = jComboBox7.getSelectedItem().toString();
+                int vlan = Integer.parseInt(jComboBox8.getSelectedItem().toString());
+                String vrf = jComboBox9.getSelectedItem().toString();
+                String router = jComboBox10.getSelectedItem().toString();
+                int noEnlace = 0;
                 try {
-                    
-                    String enlace=asignarEnlace();
-                    if(enlace.equals("")){
-                        JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
-                    }
-                    else{
-                        String[] a=enlace.split(",");
+
+                    String enlace = asignarEnlace();
+                    System.out.println(enlace);
+                    if (enlace.equals("")) {
+                        JOptionPane.showMessageDialog(null, "No se asigno direccionamiento");
+                    } else {
+                        String[] a = enlace.split(",");
+                        String ip = "";
+                        char[] w = a[0].toCharArray();
+                        int cont = 0;
+                        String ultimobit = "";
+                        for (char x : w) {
+                            if (cont == 3) {
+                                ultimobit = ultimobit + x;
+                            } else {
+                                ip = ip + x;
+                            }
+                            if (x == '.') {
+                                cont++;
+                            }
+                        }
+                        ip=ip+Integer.toString((Integer.parseInt(ultimobit)+1));
+                        System.out.println(ip);
                         sshConnector = new SSHConnector();
                         sshConnector.connect(user, pe, 22);
-                        String result = sshConnector.executeCommand("config t interface f0/1\n");
+                        String result = sshConnector.executeCommand("config t\ninterface f1/0." + vlan + "\nip address " + ip + " " + a[1] + "\n");
                         jTextArea1.setText(result);
                         sshConnector.disconnect();
                         
-                    }
-                    
-                    
 
-                    
+                    }
 
                     asignarEnlace();
                 } catch (JSchException ex) {
@@ -1109,6 +1122,7 @@ public class Administracion extends javax.swing.JFrame {
                     i = 9;
                 }
             }
+            System.out.println(cuarto_mascara);
             int cuarto_mascara_temporal = cuarto_mascara;
             for (int i = 1; i < 9; i++) {
                 if ((numero_Enlaces_Empresa + 2 + numero_Enlaces_Existentes) < Math.pow(2, i)) {
@@ -1116,8 +1130,10 @@ public class Administracion extends javax.swing.JFrame {
                     i = 9;
                 }
             }
+            System.out.println(cuarto_mascara_temporal);
+            cuarto_mascara = cuarto_mascara_temporal;
             int nuevo_numero_de_enlaces = numero_Enlaces_Empresa + numero_Enlaces_Existentes;
-
+            System.out.println("");
             if ((nuevo_numero_de_enlaces + 2) > 256) {
                 System.out.println("Excede el numero de enlaces disponibles en el ISP");
                 return "";
@@ -1136,13 +1152,13 @@ public class Administracion extends javax.swing.JFrame {
                         if (closeSelected == JOptionPane.YES_OPTION) {
                             System.out.println("se cambio la mascara cuando habia enlaces anteriores");
                             return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
-                                + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
-                                + cuarto_mascara + "," + nuevo_numero_de_enlaces;
+                                    + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
+                                    + cuarto_mascara + "," + nuevo_numero_de_enlaces;
                         } else {
                             return "";
                         }
                     } else {
-                        
+
                         return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
                                 + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
                                 + cuarto_mascara + "," + nuevo_numero_de_enlaces;
@@ -1150,7 +1166,6 @@ public class Administracion extends javax.swing.JFrame {
                 }
             }
 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
