@@ -576,6 +576,7 @@ public class Administracion extends javax.swing.JFrame {
                     } else {
                         String[] a = enlace.split(",");
                         String ip = "";
+                        noEnlace=Integer.parseInt(a[2]);
                         char[] w = a[0].toCharArray();
                         int cont = 0;
                         String ultimobit = "";
@@ -589,14 +590,31 @@ public class Administracion extends javax.swing.JFrame {
                                 cont++;
                             }
                         }
-                        ip=ip+Integer.toString((Integer.parseInt(ultimobit)+1));
+                        ip = ip + Integer.toString((Integer.parseInt(ultimobit) + 1));
                         System.out.println(ip);
+
+                        PE PE_SSH = null;
+
                         sshConnector = new SSHConnector();
-                        sshConnector.connect(user, pe, 22);
+                        for (PE pe : Inicio.pes) {
+
+                            if (ciudad.equals(pe.getCiudad())) {
+                                PE_SSH = new PE(pe.getNombre(), pe.getCiudad(), pe.getDireccionIP());
+                                break;
+                            }
+                        }
+                        sshConnector = new SSHConnector();
+                        sshConnector.connect(user, PE_SSH, 22);
                         String result = sshConnector.executeCommand("config t\ninterface f1/0." + vlan + "\nip address " + ip + " " + a[1] + "\n");
                         jTextArea1.setText(result);
                         sshConnector.disconnect();
-                        
+
+                        conDB = new ConectorDB();
+                        Connection reg = conDB.getConnection();
+                        Registro r = new Registro();
+                        r.registrarDireccionamiento(reg,a[0],a[1],empresa, ciudad, vlan, vrf,PE_SSH.getNombre() ,noEnlace);
+                        reg.close();
+                        conDB.desconectar();
 
                     }
 
@@ -608,6 +626,8 @@ public class Administracion extends javax.swing.JFrame {
                     Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                }catch(Exception e){
+                    System.out.println("ERROR");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Falta información, inténtelo de nuevo");
@@ -1158,7 +1178,7 @@ public class Administracion extends javax.swing.JFrame {
                             return "";
                         }
                     } else {
-
+                        System.out.println("");
                         return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
                                 + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
                                 + cuarto_mascara + "," + nuevo_numero_de_enlaces;
