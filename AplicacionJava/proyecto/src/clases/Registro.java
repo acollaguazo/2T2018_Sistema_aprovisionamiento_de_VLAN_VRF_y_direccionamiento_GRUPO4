@@ -60,7 +60,7 @@ public class Registro {
     }
     
     public void registrarDireccionamiento(Connection con,String dir_red,String submask_red,String empresa, String ciudad,int vlan,String nombreVRF,String nombrePE, int enlaces) {
-        String SQL = "insert into VRF (dir_red,submask_red,empresa,ciudad,vlan,nombreVRF,nombrePE,enlaces)" + " values(?,?,?,?,?,?,?,?)";
+        String SQL = "insert into direccionamiento (dir_red,submask_red,empresa,ciudad,vlan,nombreVRF,nombrePE,enlaces)" + " values(?,?,?,?,?,?,?,?)";
         try {
             
             stmt = con.createStatement();
@@ -74,6 +74,23 @@ public class Registro {
             psInsertar.setString(7, nombrePE);
             psInsertar.setInt(8, enlaces);
             
+            psInsertar.executeUpdate();
+
+            psInsertar.close();
+            stmt.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void modificartabla(Connection con, String tabla,String campoID,String registroID,String campoMOD,String registroMOD){
+        String SQL = "update "+ tabla+" set "+campoMOD+" = ?"+" where "+campoID+" = ?";
+        try {
+            
+            stmt = con.createStatement();
+            psInsertar = con.prepareStatement(SQL);
+            psInsertar.setInt(1,Integer.parseInt(registroMOD));
+            psInsertar.setString(2,registroID);
             psInsertar.executeUpdate();
 
             psInsertar.close();

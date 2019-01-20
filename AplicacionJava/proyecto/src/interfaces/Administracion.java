@@ -576,7 +576,7 @@ public class Administracion extends javax.swing.JFrame {
                     } else {
                         String[] a = enlace.split(",");
                         String ip = "";
-                        noEnlace=Integer.parseInt(a[2]);
+                        noEnlace = Integer.parseInt(a[2]);
                         char[] w = a[0].toCharArray();
                         int cont = 0;
                         String ultimobit = "";
@@ -589,6 +589,8 @@ public class Administracion extends javax.swing.JFrame {
                             if (x == '.') {
                                 cont++;
                             }
+                            
+                            
                         }
                         ip = ip + Integer.toString((Integer.parseInt(ultimobit) + 1));
                         System.out.println(ip);
@@ -612,7 +614,15 @@ public class Administracion extends javax.swing.JFrame {
                         conDB = new ConectorDB();
                         Connection reg = conDB.getConnection();
                         Registro r = new Registro();
-                        r.registrarDireccionamiento(reg,a[0],a[1],empresa, ciudad, vlan, vrf,PE_SSH.getNombre() ,noEnlace);
+                        if(a.length<4){
+                            r.registrarDireccionamiento(reg, a[0], a[1], empresa, ciudad, vlan, vrf, PE_SSH.getNombre(), noEnlace);
+                        }
+                        else{
+                            if(a[3].equals("agregoensubred")){
+                                r.modificartabla(reg, "direccionamiento", "dir_red", a[0], "enlaces", a[2]);
+                            }
+                        }
+                        
                         reg.close();
                         conDB.desconectar();
 
@@ -626,7 +636,7 @@ public class Administracion extends javax.swing.JFrame {
                     Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("ERROR");
                 }
             } else {
@@ -1159,21 +1169,31 @@ public class Administracion extends javax.swing.JFrame {
                 return "";
             } else {
                 if (cuarto_mascara_temporal == cuarto_mascara) {
-                    cuarto_mascara = cuarto_mascara_temporal;
-                    System.out.println("se agrego mas enlaces dentro de la misma subred");
-                    return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
-                            + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
-                            + cuarto_mascara + "," + nuevo_numero_de_enlaces;
+                    if (mensaje_de_aceptacion.equals("si")) {
+                        cuarto_mascara = cuarto_mascara_temporal;
+                        System.out.println("se agrego mas enlaces dentro de la misma subred");
+                        return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
+                                + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
+                                + cuarto_mascara + "," + nuevo_numero_de_enlaces+","+"agregoensubred";
+                    }
+                    else{
+                        cuarto_mascara = cuarto_mascara_temporal;
+                        System.out.println("se agrego una nueva subred diferente no existente a la base de datos");
+                        return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
+                                + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
+                                + cuarto_mascara + "," + nuevo_numero_de_enlaces;
+                    }
+
                 } else {
 
-                    if (mensaje_de_aceptacion == "si") {
+                    if (mensaje_de_aceptacion.equals("si")) {
                         cuarto_mascara = cuarto_mascara_temporal;
                         int closeSelected = JOptionPane.showConfirmDialog(null, "¿Desea asignar un nueva\n subred Si/No?", "Alerta", JOptionPane.YES_NO_OPTION);
                         if (closeSelected == JOptionPane.YES_OPTION) {
                             System.out.println("se cambio la mascara cuando habia enlaces anteriores");
                             return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
                                     + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
-                                    + cuarto_mascara + "," + nuevo_numero_de_enlaces;
+                                    + cuarto_mascara + "," + nuevo_numero_de_enlaces+","+"cambiodemascara";
                         } else {
                             return "";
                         }
