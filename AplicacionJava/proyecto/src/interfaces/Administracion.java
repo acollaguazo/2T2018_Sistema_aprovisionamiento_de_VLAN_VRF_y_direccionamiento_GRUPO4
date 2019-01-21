@@ -8,6 +8,7 @@ package interfaces;
 import clases.ConectorDB;
 import clases.Consulta;
 import clases.Direccionamiento;
+import clases.Logs;
 import clases.PE;
 import clases.Registro;
 import clases.SSHConnector;
@@ -917,6 +918,7 @@ public class Administracion extends javax.swing.JFrame {
                 } else if (option == 1) {
                     JOptionPane.showMessageDialog(null, "Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
                 }
+                Logs logs = new Logs("VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
             } catch (JSchException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException ex) {
@@ -955,6 +957,7 @@ public class Administracion extends javax.swing.JFrame {
             jTextArea1.setText(result);
             sshConnector.disconnect();
             JOptionPane.showMessageDialog(null, "se creo" + nombreVRF + " para la empresa " + empresa + " con vlan " + vlan);
+            Logs logs = new Logs("se creo" + nombreVRF + " para la empresa " + empresa + " con vlan " + vlan);
         } catch (JSchException e) {
             e.printStackTrace();
         } catch (IllegalAccessException ex) {

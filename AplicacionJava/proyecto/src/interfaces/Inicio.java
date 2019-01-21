@@ -123,6 +123,8 @@ public class Inicio extends javax.swing.JFrame {
                                 this.setVisible(false);
                                 sshConnector.disconnect();
                                 
+                                //registro del usuario que ingresa
+                                Logs logs = new Logs("Ingreso del usuario:  "+jTextField1.getText());
                                 
                             } catch (JSchException E) {
                                 JOptionPane.showMessageDialog(null, "problemas de conexion SSH, intentelo mas tarde");
