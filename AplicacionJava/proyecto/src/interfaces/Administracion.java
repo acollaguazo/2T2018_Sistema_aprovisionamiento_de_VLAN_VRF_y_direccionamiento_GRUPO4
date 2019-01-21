@@ -288,7 +288,7 @@ public class Administracion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //función que hace visible las opciones de crear VLAN cuando se seleccione
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         //AsignaEmpresaJCombo();
         AsignaCampoJcombo(jComboBox1, "empresa", "razonSocial");
@@ -321,7 +321,7 @@ public class Administracion extends javax.swing.JFrame {
             jTextField2.setVisible(false);
         }
     }//GEN-LAST:event_jRadioButton1ActionPerformed
-
+    //Función que se encarga de hacer un show run al router que selecciono al iniciar sesión
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             sshConnector.connect(user, pe, 22);
@@ -336,7 +336,7 @@ public class Administracion extends javax.swing.JFrame {
             Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    //función que hace visible las opciones de crear VRF cuando se seleccione
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         AsignaCampoJcombo(jComboBox2, "empresa", "razonSocial");
         AsignaCampoJcombo(jComboBox4, "ciudad", "nombre");
@@ -367,7 +367,8 @@ public class Administracion extends javax.swing.JFrame {
             jTextField2.setVisible(false);
         }
     }//GEN-LAST:event_jRadioButton2ActionPerformed
-
+    //Función que se encarga de crear una VLAN, crear VRF o asignar vlan según los datos
+    //que ingrese el usuario y validando los mismos
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         //la opcion de crear vlan
@@ -564,7 +565,9 @@ public class Administracion extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
-
+    //Función que valida si selecciono primero la empresa antes de seleccionar la VLAN 
+    //para la creación de una VRF y de ser correcto asigna las VLANs de la base de datos
+    //al ComboBox
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         if (jComboBox2.getSelectedItem().toString().equals("Seleccione...")) {
             JOptionPane.showMessageDialog(null, "Primero seleccione empresa");
@@ -572,7 +575,7 @@ public class Administracion extends javax.swing.JFrame {
             asignandoVLANComboBox(jComboBox3, jComboBox2, jComboBox4);
         }
     }//GEN-LAST:event_jComboBox4ActionPerformed
-
+    //función que hace visible las opciones de asignar enlaces cuando se seleccione
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
 
         AsignaCampoJcombo(jComboBox6, "empresa", "razonSocial");
@@ -611,7 +614,9 @@ public class Administracion extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
-
+    //Función que valida si selecciono primero la empresa antes de seleccionar la VLAN 
+    //para la asignación de enlaces y de ser correcto asigna las VLANs de la base de datos
+    //al ComboBox además de hacer la seleción de router PE
     private void jComboBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox7ActionPerformed
         if (jComboBox6.getSelectedItem().toString().equals("Seleccione...")) {
             JOptionPane.showMessageDialog(null, "Primero seleccione empresa");
@@ -625,7 +630,7 @@ public class Administracion extends javax.swing.JFrame {
     private void jComboBox9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox9ActionPerformed
-
+    //Función que obtiene las VRF para incluir al ComboBox
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
         String z = obtenerVRF(jComboBox9, jComboBox6);
     }//GEN-LAST:event_jComboBox6ActionPerformed
@@ -755,7 +760,9 @@ public class Administracion extends javax.swing.JFrame {
         jTextField2.setVisible(false);
 
     }
-
+    //Función que se encarga de asignar los valores de la base de datos a un combo box
+    //recibe como entrada el ComboBox al cual desee asignarle datos y un String del nombre de la tabla
+    //de la base de datos y el nombre del campo a llenar
     public void AsignaCampoJcombo(JComboBox jCombo, String nombreTabla, String nombreCampo) {
         jCombo.removeAllItems();
         jCombo.addItem("Seleccione...");
@@ -778,7 +785,8 @@ public class Administracion extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    //Función que se encarga de verificar si un dato es no numérico recibe como entrada el dato 
+    //de tipo String y devuelve un valor booleano con la respuesta.
     public static boolean isNumeric(String cadena) {
 
         boolean resultado;
@@ -792,7 +800,8 @@ public class Administracion extends javax.swing.JFrame {
 
         return resultado;
     }
-
+    //Función que se encarga de verificar si existe la VLAN en la ciudad devolviendo 
+    //como resultado un dato tipo entero con las opciones -1, 1 y 0 según los resultados
     public int existeVlanCiudad() {
         int cont = 0;
         int op = -1;
@@ -828,7 +837,8 @@ public class Administracion extends javax.swing.JFrame {
         Collections.sort(nvlan);
         return op;//retorna valor -1 cuando no existe vlan en ciudad
     }
-
+    //Función que se encarga de verificar si una empresa posee VLAN o no devolviendo
+    //como resultado un dato booleano
     public boolean poseeVLANempresa() {
         try {
             conDB = new ConectorDB();
@@ -857,7 +867,8 @@ public class Administracion extends javax.swing.JFrame {
         }
         return false;
     }
-
+    //Función que se encarga de asignar las VLAN a un ComboBox recibiendo como dato de 
+    //entrada el valor de los ComboBox de la VLAN, de la empresa y de la ciudad
     public void asignandoVLANComboBox(JComboBox jComboVLAN, JComboBox jComboEmpresa, JComboBox jComboCiudad) {
         jComboVLAN.removeAllItems();
         jComboVLAN.addItem("Seleccione...");
@@ -886,7 +897,9 @@ public class Administracion extends javax.swing.JFrame {
         }
 
     }
-
+    //Función que se encarga de registrar la VLAN en la base de datos recibiendo como datos
+    //de entrada un entero de la vlan, un string de la ciudad, un string de la empresa
+    //y un entero de la opción que va a realizar.
     public void registrarvlanBD_R(int vlan, String ciudad, String empresa, int option) {
         try {
             conDB = new ConectorDB();
@@ -915,10 +928,12 @@ public class Administracion extends javax.swing.JFrame {
                 sshConnector.disconnect();
                 if (option == -1) {
                     JOptionPane.showMessageDialog(null, "VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
+                    Logs logs = new Logs("VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
                 } else if (option == 1) {
                     JOptionPane.showMessageDialog(null, "Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
+                     Logs logs = new Logs("Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
                 }
-                Logs logs = new Logs("VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
+                
             } catch (JSchException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException ex) {
@@ -931,7 +946,8 @@ public class Administracion extends javax.swing.JFrame {
             Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    //Función que se encarga de registrar una VRF en la base de datos recibiendo como datos de entrada
+    //un entero de la VLAN, un string de la empresa y un string de la ciudad.
     public void registrarvrfBD_R(int vlan, String empresa, String ciudad) {
         conDB = new ConectorDB();
         Connection reg = conDB.getConnection();
@@ -967,7 +983,9 @@ public class Administracion extends javax.swing.JFrame {
         }
 
     }
-
+    //Función que se encarga de obtener la vrf del ComboBox recibiendo como datos de entrada
+    //el ComboBox de la VRF y el de la empresa en ese orden para devolver un dato string
+    //con el nombre de la vrf
     public String obtenerVRF(JComboBox jComboVRF, JComboBox jComboEmpresa) {
         jComboVRF.removeAllItems();
         jComboVRF.addItem("Seleccione...");
@@ -1005,7 +1023,8 @@ public class Administracion extends javax.swing.JFrame {
         }
         return nombreVRF;
     }
-
+    //Función que se encarga de asignar enlaces devolviendo como dato de salida un String 
+    //con la ip, la máscara y si ya contenia enlaces la empresa en esa sucursal
     public String asignarEnlace() {
         Direccionamiento dir = null;
         int numero_Enlaces_Existentes = 0;
@@ -1123,7 +1142,8 @@ public class Administracion extends javax.swing.JFrame {
         }
         return lineassh;
     }
-
+    //Función que se encarga de seleccionar el dispositivo PE recibiendo como dato de entrada
+    //un string con el nombre de la ciudad y un ComboBox de los dispositivos PE
     public void seleccionarPE(String ciudad, JComboBox jComboPE) {
         if (ciudad.equals("UIO")) {
             jComboPE.setSelectedItem("PE1-UIO");
@@ -1131,7 +1151,9 @@ public class Administracion extends javax.swing.JFrame {
 
         }
     }
-
+    //Función que se encarga de devolver un valor en binario recibiendo como dato de
+    //entrada un entero con el número de VLAN y otro con la cantidad de bits que desea obtener
+    //y devuelve como salida un arreglo de enteros compuesto de unos y ceros
     private ArrayList<Integer> binario_list(int Vlan_Empresa, int cant_bits) {
         int aux_vlan = Vlan_Empresa;
         ArrayList<Integer> binario_vlan = new ArrayList<Integer>();

@@ -99,7 +99,8 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Acción que realizara el botón, el mismo verificara si el usuario existe o no en la base de datos
+    //y si los argumentos se ingresan de forma correcta y llenando todos los campos
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             if (!jComboBox1.getSelectedItem().toString().equals("Seleccione")) {
@@ -204,7 +205,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
-
+    //Función que se encarga de inicializar el ComboBox con todos los valores existentes en la base de datos
     public void InicializaComboBoxPE() {
         try {
             conDB = new ConectorDB();
@@ -226,7 +227,9 @@ public class Inicio extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    //Función que se encarga de validar si el usuario se encuentra registrado en la base de datos 
+    //recibe como entrada dos datos string uno con el nombre del usuario y el otro con la contraseña en ese orden
+    //devuelve un dato entero ya sea -1, 0 o 1 según los datos que ingreso el usuario.
     public int validaruser(String user, String pass) {
         int op = -1;
         try {
