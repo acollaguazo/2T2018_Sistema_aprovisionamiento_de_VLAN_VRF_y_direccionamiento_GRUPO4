@@ -7,6 +7,7 @@ package interfaces;
 
 import clases.ConectorDB;
 import clases.Consulta;
+import clases.Logs;
 import clases.PE;
 import clases.SSHConnector;
 import clases.User;
@@ -55,6 +56,7 @@ public class Inicio extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,7 +85,9 @@ public class Inicio extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 95, 44));
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 132, 112, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 206, 112, -1));
+
+        jTextField2.setFont(new java.awt.Font("Symbol", 0, 11)); // NOI18N
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 206, 112, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +97,13 @@ public class Inicio extends javax.swing.JFrame {
         });
         getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 73, 112, -1));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel5.setText("INICIO DE SESION");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 200, 20));
+
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/interfaces/Fondo_Inicio_De_Sesion-ConvertImage.jpg"))); // NOI18N
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("INICIO DE SESIÓN");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 340));
 
         pack();
@@ -202,6 +211,7 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
