@@ -13,11 +13,12 @@ public class PE {
     String nombre;
     String ciudad;
     String direccionIP;
-
-    public PE(String nombre, String ciudad, String direccionIP) {
+    String int_vlan;
+    public PE(String nombre, String ciudad, String direccionIP, String int_vlan) {
         this.nombre = nombre;
         this.ciudad = ciudad;
         this.direccionIP = direccionIP;
+        this.int_vlan=int_vlan;
     }
 
     public String getNombre() {
@@ -43,6 +44,15 @@ public class PE {
     public void setDireccionIP(String direccionIP) {
         this.direccionIP = direccionIP;
     }
+
+    public String getInt_vlan() {
+        return int_vlan;
+    }
+
+    public void setInt_vlan(String int_vlan) {
+        this.int_vlan = int_vlan;
+    }
+    
 
     @Override
     public String toString() {

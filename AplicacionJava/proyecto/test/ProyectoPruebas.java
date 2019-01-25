@@ -45,8 +45,9 @@ public class ProyectoPruebas {
         //Instancias para PE
         String nombre = sc.nextLine();
         String ciudadPE = sc.nextLine();
-        String direccionIP = sc.nextLine();       
-        pe = new PE(nombre,ciudadPE,direccionIP);
+        String direccionIP = sc.nextLine();
+        String int_vlan=sc.nextLine();
+        pe = new PE(nombre,ciudadPE,direccionIP,int_vlan);
         
         //Instancias para User
         String usuarioAdmin = sc.nextLine();

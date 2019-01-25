@@ -1,0 +1,34 @@
+25-ene-2019  04:42:20 PM
+Ingreso del usuario:  stalin
+25-ene-2019  04:52:21 PM
+Ingreso del usuario:  stalin
+25-ene-2019  04:58:18 PM
+Ingreso del usuario:  stalin
+25-ene-2019  05:02:34 PM
+VLAN 38 creada exitosamente en la ciudad UIO para la empresa INTACO
+25-ene-2019  05:04:20 PM
+Se asigno una VLAN nueva 38 en la ciudad UIO para la empresa INTACO
+25-ene-2019  05:10:12 PM
+Ingreso del usuario:  stalin
+25-ene-2019  05:17:58 PM
+Ingreso del usuario:  stalin
+25-ene-2019  05:27:29 PM
+VLAN 378 creada exitosamente en la ciudad UIO para la empresa INTACO
+25-ene-2019  05:34:50 PM
+Ingreso del usuario:  stalin
+25-ene-2019  05:36:41 PM
+VLAN 512 creada exitosamente en la ciudad UIO para la empresa NESTLE
+25-ene-2019  05:45:47 PM
+Ingreso del usuario:  stalin
+25-ene-2019  05:47:28 PM
+VLAN 512 creada exitosamente en la ciudad UIO para la empresa INTACO
+25-ene-2019  05:48:23 PM
+VLAN 25 creada exitosamente en la ciudad UIO para la empresa INTACO
+25-ene-2019  05:49:47 PM
+Se asigno una VLAN nueva 1 en la ciudad UIO para la empresa NESTLE
+25-ene-2019  06:02:21 PM
+Ingreso del usuario:  stalin
+25-ene-2019  06:06:29 PM
+Ingreso del usuario:  stalin
+25-ene-2019  06:12:53 PM
+se creoVRF_INTACO_25 para la empresa INTACO con vlan 25

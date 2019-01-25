@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class Inicio extends javax.swing.JFrame {
     public static ArrayList<PE>pes=new ArrayList<PE>();
+    public static int puertoSSH=22; 
     ConectorDB conDB;
     Consulta consulta;
     User user;
@@ -119,10 +120,10 @@ public class Inicio extends javax.swing.JFrame {
                             sshConnector = new SSHConnector();
                             try {
                                 System.out.println(pe.toString());
-                                sshConnector.connect(user, pe, 22);
+                                sshConnector.connect(user, pe, puertoSSH);
                                 String inicioshow=sshConnector.executeCommand("");
                                 System.out.println(inicioshow);
-                                
+                                Logs logs = new Logs("Ingreso del usuario:  "+jTextField1.getText());
                                 adminForm=new Administracion();
                                 adminForm.setPE(pe);
                                 adminForm.setUser(user);
@@ -134,7 +135,7 @@ public class Inicio extends javax.swing.JFrame {
                                 sshConnector.disconnect();
                                 
                                 //registro del usuario que ingresa
-                                Logs logs = new Logs("Ingreso del usuario:  "+jTextField1.getText());
+                                
                                 
                             } catch (JSchException E) {
                                 JOptionPane.showMessageDialog(null, "problemas de conexion SSH, intentelo mas tarde");
@@ -143,8 +144,11 @@ public class Inicio extends javax.swing.JFrame {
                         case 0:
                             JOptionPane.showMessageDialog(null, "Contraseña incorrecta inténtelo de nuevo");
                             break;
+                        case -1:
+                            JOptionPane.showMessageDialog(null, "El usuario ingresado no existe");
+                            break;
                         default:
-                            JOptionPane.showMessageDialog(null, "La contraseña es Incorrecta");
+                            JOptionPane.showMessageDialog(null, "ERROR");
                             break;
 
                     }
@@ -164,7 +168,7 @@ public class Inicio extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         for(PE p:pes){
             if (jComboBox1.getSelectedItem().toString().equals(p.getNombre())){
-                this.pe=new PE(p.getNombre(), p.getCiudad(), p.getDireccionIP());
+                this.pe=new PE(p.getNombre(), p.getCiudad(), p.getDireccionIP(),p.getInt_vlan());
             }
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -224,7 +228,7 @@ public class Inicio extends javax.swing.JFrame {
             ResultSet rs = consulta.getResultSetTabla(reg,"providerEdge");
             if (rs != null) {
                 while (rs.next()) {
-                    pes.add(new PE(rs.getString("nombrePE"),rs.getString("ciudad"), rs.getString("direccionIP")));
+                    pes.add(new PE(rs.getString("nombrePE"),rs.getString("ciudad"), rs.getString("direccionIP"),rs.getString("int_vlan")));
                     jComboBox1.addItem(rs.getString("nombrePE"));
                 }
             } else {
