@@ -14,31 +14,33 @@ import clases.User;
 import com.jcraft.jsch.JSchException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author HOME
+ * Interfaz de Inico
+ * @author Stalin Alvarado -GRUPO 4
+ * @version 1.5
  */
 public class Inicio extends javax.swing.JFrame {
-    public static ArrayList<PE>pes=new ArrayList<PE>();
-    public static int puertoSSH=22; 
+
+    public static ArrayList<PE> pes = new ArrayList<PE>();
+    public static final int PUERTOSSH = 22;
     ConectorDB conDB;
     Consulta consulta;
     User user;
     PE pe;
     SSHConnector sshConnector;
     Administracion adminForm;
+
     /**
      * Creates new form Inicio
      */
     public Inicio() {
         initComponents();
-        InicializaComboBoxPE();
+        inicializaComboBoxPE();
     }
 
     /**
@@ -109,8 +111,11 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    //Acción que realizara el botón, el mismo verificara si el usuario existe o no en la base de datos
-    //y si los argumentos se ingresan de forma correcta y llenando todos los campos
+/**
+     * Acción que realizara el botón, el mismo verificara si el usuario existe o
+     * no en la base de datos y si los argumentos se ingresan de forma correcta
+     * y llenando todos los campos
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             if (!jComboBox1.getSelectedItem().toString().equals("Seleccione")) {
@@ -120,11 +125,11 @@ public class Inicio extends javax.swing.JFrame {
                             sshConnector = new SSHConnector();
                             try {
                                 System.out.println(pe.toString());
-                                sshConnector.connect(user, pe, puertoSSH);
-                                String inicioshow=sshConnector.executeCommand("");
+                                sshConnector.connect(user, pe, PUERTOSSH);
+                                String inicioshow = sshConnector.executeCommand("");
                                 System.out.println(inicioshow);
-                                Logs logs = new Logs("Ingreso del usuario:  "+jTextField1.getText());
-                                adminForm=new Administracion();
+                                Logs logs = new Logs("Ingreso del usuario:  " + jTextField1.getText());
+                                adminForm = new Administracion();
                                 adminForm.setPE(pe);
                                 adminForm.setUser(user);
                                 adminForm.setConectorDB(conDB);
@@ -133,10 +138,8 @@ public class Inicio extends javax.swing.JFrame {
                                 adminForm.setVisible(true);
                                 this.setVisible(false);
                                 sshConnector.disconnect();
-                                
+
                                 //registro del usuario que ingresa
-                                
-                                
                             } catch (JSchException E) {
                                 JOptionPane.showMessageDialog(null, "problemas de conexion SSH, intentelo mas tarde");
                             }
@@ -166,9 +169,9 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        for(PE p:pes){
-            if (jComboBox1.getSelectedItem().toString().equals(p.getNombre())){
-                this.pe=new PE(p.getNombre(), p.getCiudad(), p.getDireccionIP(),p.getInt_vlan());
+        for (PE p : pes) {
+            if (jComboBox1.getSelectedItem().toString().equals(p.getNombre())) {
+                this.pe = new PE(p.getNombre(), p.getCiudad(), p.getDireccionIP(), p.getInt_vlan());
             }
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
@@ -219,38 +222,41 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
-    //Función que se encarga de inicializar el ComboBox con todos los valores existentes en la base de datos
-    public void InicializaComboBoxPE() {
+    /**
+     * Función que se encarga de inicializar el ComboBox con todos los valores
+     * existentes en la base de datos
+     */
+    public void inicializaComboBoxPE() {
         try {
             conDB = new ConectorDB();
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
-            ResultSet rs = consulta.getResultSetTabla(reg,"providerEdge");
+            ResultSet rs = consulta.getResultSetTabla(reg, "providerEdge");
             if (rs != null) {
                 while (rs.next()) {
-                    pes.add(new PE(rs.getString("nombrePE"),rs.getString("ciudad"), rs.getString("direccionIP"),rs.getString("int_vlan")));
+                    pes.add(new PE(rs.getString("nombrePE"), rs.getString("ciudad"), rs.getString("direccionIP"), rs.getString("int_vlan")));
                     jComboBox1.addItem(rs.getString("nombrePE"));
                 }
             } else {
                 System.out.println("ERROR");
             }
-            rs.close();
-            reg.close();
-            conDB.desconectar();
+            
+            
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     //Función que se encarga de validar si el usuario se encuentra registrado en la base de datos 
     //recibe como entrada dos datos string uno con el nombre del usuario y el otro con la contraseña en ese orden
     //devuelve un dato entero ya sea -1, 0 o 1 según los datos que ingreso el usuario.
     public int validaruser(String user, String pass) {
         int op = -1;
         try {
-            conDB = new ConectorDB();
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
-            ResultSet rs = consulta.getResultSetTabla(reg,"user");
+            ResultSet rs = consulta.getResultSetTabla(reg, "user");
             if (rs != null) {
                 while (rs.next()) {
 
@@ -258,8 +264,7 @@ public class Inicio extends javax.swing.JFrame {
                         if (pass.equals(rs.getString("contrasena"))) {
                             this.user = new User(user, pass, Integer.parseInt(rs.getString("privilegio")));
                             rs.close();
-                            reg.close();
-                            conDB.desconectar();
+                            
                             return 1;
                         }
                         op = 0;
@@ -270,8 +275,7 @@ public class Inicio extends javax.swing.JFrame {
                 System.out.println("ERROR");
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

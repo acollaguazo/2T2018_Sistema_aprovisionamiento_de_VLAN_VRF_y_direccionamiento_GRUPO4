@@ -27,7 +27,9 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author HOME
+ * @author Stalin Alvarado
+ * @author Bryan Perez
+ * @version 1.5
  */
 public class Administracion extends javax.swing.JFrame {
 
@@ -39,7 +41,7 @@ public class Administracion extends javax.swing.JFrame {
     private ArrayList<Integer> nvlan = new ArrayList<Integer>();
     private int numeroEnlacesEmpresa;
     private int vlanEmpresa;
-    private int maxVlan = 4069;
+    private final int MAXVLAN = 4069;
 
     /**
      * Creates new form Administracion
@@ -151,7 +153,7 @@ public class Administracion extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 248, 314));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, 290, 314));
 
         jButton1.setText("SHOW RUN");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -283,8 +285,8 @@ public class Administracion extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Enlaces");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 610, -1, 24));
+        jLabel16.setText("ENLACES");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 620, -1, 24));
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -303,11 +305,10 @@ public class Administracion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    //función que hace visible las opciones de crear VLAN cuando se seleccione
+
+//función que hace visible las opciones de crear VLAN cuando se seleccione
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        //AsignaEmpresaJCombo();
         asignaCampoJcombo(jComboBox1, "empresa", "razonSocial");
-        //AsignarCiudadJCombo();
         asignaCampoJcombo(jComboBox5, "ciudad", "nombre");
         if (jRadioButton1.isSelected()) {
             jLabel4.setVisible(true);
@@ -339,7 +340,7 @@ public class Administracion extends javax.swing.JFrame {
     //Función que se encarga de hacer un show run al router que selecciono al iniciar sesión
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            sshConnector.connect(user, pe, Inicio.puertoSSH);
+            sshConnector.connect(user, pe, Inicio.PUERTOSSH);
             String result = sshConnector.executeCommand("show run\n       ");
             jTextArea1.setText(result);
             sshConnector.disconnect();
@@ -393,7 +394,7 @@ public class Administracion extends javax.swing.JFrame {
                 //verifica si la vlan es un numero
                 if (isNumeric(jTextField1.getText())) {
                     //verifica si la vlan es un numero entre 1-4096
-                    if ((Integer.parseInt(jTextField1.getText()) >= 1) && (Integer.parseInt(jTextField1.getText()) <= maxVlan)) {
+                    if ((Integer.parseInt(jTextField1.getText()) >= 1) && (Integer.parseInt(jTextField1.getText()) <= MAXVLAN)) {
 
                         switch (existeVlanCiudad()) {
 
@@ -420,12 +421,12 @@ public class Administracion extends javax.swing.JFrame {
                                 System.out.println("vlan existe se asignara otra");
                                 JOptionPane.showMessageDialog(null, "VLAN " + jTextField1.getText() + " existe");
                                 if (!poseeVLANempresa()) {
-                                    for (int i = 1; i <= maxVlan; i++) {
+                                    for (int i = 1; i <= MAXVLAN; i++) {
                                         for (int v : nvlan) {
                                             if (i != v) {
                                                 registrarvlanBD_R(i, jComboBox5.getSelectedItem().toString(), jComboBox1.getSelectedItem().toString(), 1);
 
-                                                i = (maxVlan + 1);
+                                                i = (MAXVLAN + 1);
                                                 break;
                                             }
 
@@ -436,7 +437,7 @@ public class Administracion extends javax.swing.JFrame {
                                 } else {
                                     System.out.println("la vlan existe y la empresa tiene una vlan quiere otra");
 
-                                    for (int i = 1; i <= maxVlan; i++) {
+                                    for (int i = 1; i <= MAXVLAN; i++) {
                                         for (int v : nvlan) {
                                             if (i != v) {
                                                 int closeSelected = JOptionPane.showConfirmDialog(null, "¿desea que se cree otra vlan para la empresa?", "Alerta", JOptionPane.YES_NO_OPTION);
@@ -446,7 +447,7 @@ public class Administracion extends javax.swing.JFrame {
                                                 } else {
                                                     System.out.println("NO SE CREO VLAN");
                                                 }
-                                                i = (maxVlan + 1);
+                                                i = (MAXVLAN + 1);
                                                 break;
                                             }
 
@@ -494,13 +495,17 @@ public class Administracion extends javax.swing.JFrame {
                 String vrf = jComboBox9.getSelectedItem().toString();
                 String router = jComboBox10.getSelectedItem().toString();
                 int noEnlace = 0;
+                String ipSecundaria = "";
                 try {
 
                     String enlace = asignarEnlace();
                     System.out.println(enlace);
                     if (enlace.equals("")) {
                         JOptionPane.showMessageDialog(null, "No se asigno direccionamiento");
-                    } else {
+                    }else if(enlace.equals("exedeEnlaces")){
+                        JOptionPane.showMessageDialog(null, "Exede el numero de Enlaces disponible para la Vlan se enviara un correo al Administrador");
+                    }
+                    else {
                         String[] a = enlace.split(",");
                         String ip = "";
                         noEnlace = Integer.parseInt(a[2]);
@@ -518,7 +523,14 @@ public class Administracion extends javax.swing.JFrame {
                             }
 
                         }
-                        ip = ip + Integer.toString((Integer.parseInt(ultimobit) + 1));
+                        if (a.length < 4) {
+                            ip = ip + Integer.toString((Integer.parseInt(ultimobit) + 1));
+                        } else {
+                            if (a[3].equals("cambiodemascara")) {
+                                ipSecundaria = ip + Integer.toString(Integer.parseInt(ultimobit) + Integer.parseInt(a[2]) + 1);
+                            }
+                        }
+
                         System.out.println(ip);
 
                         PE PE_SSH = null;
@@ -531,29 +543,35 @@ public class Administracion extends javax.swing.JFrame {
                                 break;
                             }
                         }
+                        String result = "";
                         sshConnector = new SSHConnector();
-                        sshConnector.connect(user, PE_SSH, Inicio.puertoSSH);
-                        String result = sshConnector.executeCommand("config t\ninterface " + PE_SSH.getInt_vlan() + "." + vlan + "\nip address " + ip + " " + a[1] + "\n");
+                        sshConnector.connect(user, PE_SSH, Inicio.PUERTOSSH);
+                        if (ipSecundaria.equals("")) {
+                            result = sshConnector.executeCommand("config t\ninterface " + PE_SSH.getInt_vlan() + "." + vlan + "\nip address " + ip + " " + a[1] + "\n");
+                        } else {
+                            result = sshConnector.executeCommand("config t\ninterface " + PE_SSH.getInt_vlan() + "." + vlan + "\nip address " + ipSecundaria + " " + a[1] + " secondary\n");
+                        }
                         jTextArea1.setText(result);
                         sshConnector.disconnect();
 
-                        conDB = new ConectorDB();
                         Connection reg = conDB.getConnection();
                         Registro r = new Registro();
                         if (a.length < 4) {
+                            JOptionPane.showMessageDialog(null, "Se asigna exitosamente la subred: "+a[0]+"/"+a[1]+" de acuerdo a "+a[2]+" enlaces");
                             r.registrarDireccionamiento(reg, a[0], a[1], empresa, ciudad, vlan, vrf, PE_SSH.getNombre(), noEnlace);
                         } else {
                             if (a[3].equals("agregoensubred")) {
+                                JOptionPane.showMessageDialog(null, "la subinterface "+PE_SSH.getInt_vlan()+"."+vlan+" no se asignara subred pero se actualiza la cantidad de enlaces");
                                 r.modificartabla(reg, "direccionamiento", "dir_red", a[0], "enlaces", a[2]);
+                            } else if (a[3].equals("cambiodemascara")) {
+                                JOptionPane.showMessageDialog(null, "Se creo una nueva subred");   
+                                r.modificartabla(reg, "direccionamiento", "dir_red", a[0], "enlaces", a[2]);
+                                r.modificartabla(reg, "direccionamiento", "dir_red", a[0], "submask_red", a[1]);
                             }
                         }
 
-                        reg.close();
-                        conDB.desconectar();
-
                     }
 
-                    asignarEnlace();
                 } catch (JSchException ex) {
                     JOptionPane.showMessageDialog(null, "Falla en la conexión con el dispositivo PE, inténtelo más tarde");
                     Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -788,7 +806,6 @@ public class Administracion extends javax.swing.JFrame {
         jCombo.removeAllItems();
         jCombo.addItem("Seleccione...");
         try {
-            conDB = new ConectorDB();
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
             ResultSet rs = consulta.getResultSetTabla(reg, nombreTabla);
@@ -800,8 +817,7 @@ public class Administracion extends javax.swing.JFrame {
                 System.out.println("ERROR");
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -829,7 +845,7 @@ public class Administracion extends javax.swing.JFrame {
         int cont = 0;
         int op = -1;
         try {
-            conDB = new ConectorDB();
+
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
             ResultSet rs = consulta.getResultSetTabla(reg, "vlan");
@@ -849,12 +865,11 @@ public class Administracion extends javax.swing.JFrame {
 
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (cont == maxVlan) {
+        if (cont == MAXVLAN) {
             op = 0; //si el contador de vlans es 4096 entonces cambia op a pesar de que haya  un numero de vlan
         }           //  corrige el error en que existe vlan y haya 4096 vlans 
         Collections.sort(nvlan);
@@ -865,7 +880,7 @@ public class Administracion extends javax.swing.JFrame {
     //como resultado un dato booleano
     public boolean poseeVLANempresa() {
         try {
-            conDB = new ConectorDB();
+
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
             ResultSet rs = consulta.getResultSetTabla(reg, "vlan");
@@ -874,8 +889,6 @@ public class Administracion extends javax.swing.JFrame {
                     if (jComboBox5.getSelectedItem().toString().equals(rs.getString("ciudad"))
                             && jComboBox1.getSelectedItem().toString().equals(rs.getString("empresa"))) {
                         rs.close();
-                        reg.close();
-                        conDB.desconectar();
                         return true;
                     }
                 }
@@ -884,8 +897,7 @@ public class Administracion extends javax.swing.JFrame {
 
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -899,7 +911,7 @@ public class Administracion extends javax.swing.JFrame {
         jComboVLAN.addItem("Seleccione...");
 
         try {
-            conDB = new ConectorDB();
+
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
             ResultSet rs = consulta.getResultSetTabla(reg, "vlan");
@@ -915,8 +927,7 @@ public class Administracion extends javax.swing.JFrame {
                 System.out.println("ERROR");
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -927,48 +938,39 @@ public class Administracion extends javax.swing.JFrame {
     //de entrada un entero de la vlan, un string de la ciudad, un string de la empresa
     //y un entero de la opción que va a realizar.
     public void registrarvlanBD_R(int vlan, String ciudad, String empresa, int option) {
+        Connection reg = conDB.getConnection();
+        Registro r = new Registro();
+        r.registrarVLAN(reg, vlan, ciudad, empresa);
         try {
-            conDB = new ConectorDB();
-            Connection reg = conDB.getConnection();
-            Registro r = new Registro();
-            r.registrarVLAN(reg, vlan, ciudad, empresa);
-            reg.close();
-            conDB.desconectar();
+            PE PE_SSH = null;
 
-            try {
-                PE PE_SSH = null;
+            sshConnector = new SSHConnector();
+            for (PE pe : Inicio.pes) {
 
-                sshConnector = new SSHConnector();
-                for (PE pe : Inicio.pes) {
-
-                    if (ciudad.equals(pe.getCiudad())) {
-                        PE_SSH = new PE(pe.getNombre(), pe.getCiudad(), pe.getDireccionIP(), pe.getInt_vlan());
-                        break;
-                    }
+                if (ciudad.equals(pe.getCiudad())) {
+                    PE_SSH = new PE(pe.getNombre(), pe.getCiudad(), pe.getDireccionIP(), pe.getInt_vlan());
+                    break;
                 }
-                System.out.println(PE_SSH.toString());
-                sshConnector.connect(user, PE_SSH, Inicio.puertoSSH);
+            }
+            System.out.println(PE_SSH.toString());
+            sshConnector.connect(user, PE_SSH, Inicio.PUERTOSSH);
 
-                String result = sshConnector.executeCommand("conf t\n" + "int f0/0." + vlan + "\n" + "encapsulation dot1q " + vlan + "\n" + "description VLAN-DE-EMPRESA-" + empresa + "\n" + "do wr \n\n");
-                jTextArea1.setText(result);
-                sshConnector.disconnect();
-                if (option == -1) {
-                    JOptionPane.showMessageDialog(null, "VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
-                    Logs logs = new Logs("VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
-                } else if (option == 1) {
-                    JOptionPane.showMessageDialog(null, "Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
-                    Logs logs = new Logs("Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
-                }
-
-            } catch (JSchException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            String result = sshConnector.executeCommand("conf t\n" + "int " + PE_SSH + "." + vlan + "\n" + "encapsulation dot1q " + vlan + "\n" + "description VLAN-DE-EMPRESA-" + empresa + "\n" + "do wr \n\n");
+            jTextArea1.setText(result);
+            sshConnector.disconnect();
+            if (option == -1) {
+                JOptionPane.showMessageDialog(null, "VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
+                Logs logs = new Logs("VLAN " + vlan + " creada exitosamente en la ciudad " + ciudad + " para la empresa " + empresa);
+            } else if (option == 1) {
+                JOptionPane.showMessageDialog(null, "Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
+                Logs logs = new Logs("Se asigno una VLAN nueva " + vlan + " en la ciudad " + ciudad + " para la empresa " + empresa);
             }
 
-        } catch (SQLException ex) {
+        } catch (JSchException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -976,7 +978,7 @@ public class Administracion extends javax.swing.JFrame {
     //Función que se encarga de registrar una VRF en la base de datos recibiendo como datos de entrada
     //un entero de la VLAN, un string de la empresa y un string de la ciudad.
     public void registrarVrfRoutBD(int vlan, String empresa, String ciudad) {
-        conDB = new ConectorDB();
+
         Connection reg = conDB.getConnection();
         Registro r = new Registro();
         String nombreVRF = "VRF_" + empresa + "_" + vlan + "";
@@ -995,8 +997,8 @@ public class Administracion extends javax.swing.JFrame {
                 }
             }
             System.out.println(PE_SSH.toString());
-            sshConnector.connect(user, PE_SSH, Inicio.puertoSSH);
-            String result = sshConnector.executeCommand("config t\nip vrf " + nombreVRF + "\nrd 1:" + vlan + "\nroute-target export 1:" + vlan + "\nroute-target import 1:" + vlan + "\nint f0/0." + vlan + "\nip vrf forwarding " + nombreVRF + "\ndo wr\n" + "" + "\ndo wr\n\n ");
+            sshConnector.connect(user, PE_SSH, Inicio.PUERTOSSH);
+            String result = sshConnector.executeCommand("config t\nip vrf " + nombreVRF + "\nrd 1:" + vlan + "\nroute-target export 1:" + vlan + "\nroute-target import 1:" + vlan + "\nint " + PE_SSH.getInt_vlan() + "." + vlan + "\nip vrf forwarding " + nombreVRF + "\ndo wr\n" + "" + "\ndo wr\n\n ");
             jTextArea1.setText(result);
             sshConnector.disconnect();
             JOptionPane.showMessageDialog(null, "se creo" + nombreVRF + " para la empresa " + empresa + " con vlan " + vlan);
@@ -1020,8 +1022,6 @@ public class Administracion extends javax.swing.JFrame {
 
         String nombreVRF = "no_existe";
         try {
-            conDB = new ConectorDB();
-
             Connection reg = conDB.getConnection();
 
             consulta = new Consulta();
@@ -1043,8 +1043,7 @@ public class Administracion extends javax.swing.JFrame {
 
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
+
         } catch (Exception e) {
             System.out.println("abc");
             e.printStackTrace();
@@ -1060,7 +1059,7 @@ public class Administracion extends javax.swing.JFrame {
         String lineassh = "";
         String mensaje_de_aceptacion = "no";
         try {
-            conDB = new ConectorDB();
+
             Connection reg = conDB.getConnection();
             consulta = new Consulta();
             ResultSet rs = consulta.getResultSetTabla(reg, "direccionamiento");
@@ -1077,8 +1076,6 @@ public class Administracion extends javax.swing.JFrame {
                 System.out.println("ERROR");
             }
             rs.close();
-            reg.close();
-            conDB.desconectar();
 
             if (dir == null) {
                 mensaje_de_aceptacion = "no";
@@ -1121,12 +1118,11 @@ public class Administracion extends javax.swing.JFrame {
                 }
             }
             System.out.println(cuarto_mascara_temporal);
-            cuarto_mascara = cuarto_mascara_temporal;
+
             int nuevo_numero_de_enlaces = numeroEnlacesEmpresa + numero_Enlaces_Existentes;
             System.out.println("");
             if ((nuevo_numero_de_enlaces + 2) > 256) {
-                System.out.println("Excede el numero de enlaces disponibles en el ISP");
-                return "";
+                return "exedeEnlaces";
             } else {
                 if (cuarto_mascara_temporal == cuarto_mascara) {
                     if (mensaje_de_aceptacion.equals("si")) {
@@ -1144,7 +1140,9 @@ public class Administracion extends javax.swing.JFrame {
                     }
 
                 } else {
-
+                    System.out.println("");
+                    System.out.println(cuarto_mascara + "," + cuarto_mascara_temporal);
+                    System.out.println("");
                     if (mensaje_de_aceptacion.equals("si")) {
                         cuarto_mascara = cuarto_mascara_temporal;
                         int closeSelected = JOptionPane.showConfirmDialog(null, "¿Desea asignar un nueva\n subred Si/No?", "Alerta", JOptionPane.YES_NO_OPTION);
@@ -1158,6 +1156,7 @@ public class Administracion extends javax.swing.JFrame {
                         }
                     } else {
                         System.out.println("");
+                        cuarto_mascara = cuarto_mascara_temporal;
                         return primer_octeto + "." + segundo_octeto + "." + tercer_octeto + "." + cuarto_octeto
                                 + "," + primero_mascara + "." + segundo_mascara + "." + tercero_mascara + "."
                                 + cuarto_mascara + "," + nuevo_numero_de_enlaces;

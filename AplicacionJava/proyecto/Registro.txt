@@ -32,3 +32,45 @@ Ingreso del usuario:  stalin
 Ingreso del usuario:  stalin
 25-ene-2019  06:12:53 PM
 se creoVRF_INTACO_25 para la empresa INTACO con vlan 25
+25-ene-2019  07:54:02 PM
+Ingreso del usuario:  stalin
+25-ene-2019  07:58:38 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:08:42 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:24:10 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:26:33 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:41:05 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:43:10 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:46:36 PM
+Ingreso del usuario:  stalin
+25-ene-2019  08:51:22 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:10:47 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:13:58 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:15:20 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:19:40 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:20:21 PM
+se creoVRF_NESTLE_1 para la empresa NESTLE con vlan 1
+25-ene-2019  09:24:16 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:32:24 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:41:19 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:47:11 PM
+Ingreso del usuario:  stalin
+25-ene-2019  09:54:13 PM
+Ingreso del usuario:  stalin
+25-ene-2019  10:14:29 PM
+Ingreso del usuario:  stalin
+25-ene-2019  10:16:38 PM
+Ingreso del usuario:  stalin

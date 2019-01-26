@@ -5,6 +5,7 @@
  */
 package clases;
 
+import interfaces.Administracion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ public class Registro {
     public void registrarVRF(Connection con, String nombreVRF, int N_vlan, String ciudad, String empresa) {
         String SQL = "insert into VRF (nombreVRF,empresa,ciudad,vlan)" + " values(?,?,?,?)";
         try {
-            
+
             stmt = con.createStatement();
             psInsertar = con.prepareStatement(SQL);
             psInsertar.setString(1, nombreVRF);
@@ -58,11 +59,11 @@ public class Registro {
             e.printStackTrace();
         }
     }
-    
-    public void registrarDireccionamiento(Connection con,String dir_red,String submask_red,String empresa, String ciudad,int vlan,String nombreVRF,String nombrePE, int enlaces) {
+
+    public void registrarDireccionamiento(Connection con, String dir_red, String submask_red, String empresa, String ciudad, int vlan, String nombreVRF, String nombrePE, int enlaces) {
         String SQL = "insert into direccionamiento (dir_red,submask_red,empresa,ciudad,vlan,nombreVRF,nombrePE,enlaces)" + " values(?,?,?,?,?,?,?,?)";
         try {
-            
+
             stmt = con.createStatement();
             psInsertar = con.prepareStatement(SQL);
             psInsertar.setString(1, dir_red);
@@ -73,7 +74,7 @@ public class Registro {
             psInsertar.setString(6, nombreVRF);
             psInsertar.setString(7, nombrePE);
             psInsertar.setInt(8, enlaces);
-            
+
             psInsertar.executeUpdate();
 
             psInsertar.close();
@@ -83,14 +84,19 @@ public class Registro {
             e.printStackTrace();
         }
     }
-    public void modificartabla(Connection con, String tabla,String campoID,String registroID,String campoMOD,String registroMOD){
-        String SQL = "update "+ tabla+" set "+campoMOD+" = ?"+" where "+campoID+" = ?";
+
+    public void modificartabla(Connection con, String tabla, String campoID, String registroID, String campoMOD, String registroMOD) {
+        String SQL = "update " + tabla + " set " + campoMOD + " = ?" + " where " + campoID + " = ?";
         try {
-            
+
             stmt = con.createStatement();
             psInsertar = con.prepareStatement(SQL);
-            psInsertar.setInt(1,Integer.parseInt(registroMOD));
-            psInsertar.setString(2,registroID);
+            if (Administracion.isNumeric(registroMOD)) {
+                psInsertar.setInt(1, Integer.parseInt(registroMOD));
+            } else {
+                psInsertar.setString(1, registroMOD);
+            }
+            psInsertar.setString(2, registroID);
             psInsertar.executeUpdate();
 
             psInsertar.close();
